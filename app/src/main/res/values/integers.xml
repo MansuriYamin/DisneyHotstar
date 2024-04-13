@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="mobile_number_min_length">8</integer>
+    <integer name="mobile_number_max_length">11</integer>
+    <integer name="password_min_length">8</integer>
+    <integer name="name_min_length">3</integer>
+</resources>
