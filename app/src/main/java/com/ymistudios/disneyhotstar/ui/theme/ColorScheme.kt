@@ -14,8 +14,9 @@ class Colors(
     background: Color,
     toolbar: Color,
     border: Color,
-    icon: Color,
-    title: Color,
+    iconForeground: Color,
+    iconBackground: Color,
+    text: Color,
     subTitle: Color,
     secondaryBackground: Color,
     hint: Color,
@@ -33,9 +34,11 @@ class Colors(
         private set
     var border by mutableStateOf(border)
         private set
-    var icon by mutableStateOf(icon)
+    var iconForeground by mutableStateOf(iconForeground)
         private set
-    var text by mutableStateOf(title)
+    var iconBackground by mutableStateOf(iconBackground)
+        private set
+    var text by mutableStateOf(text)
         private set
     var subTitle by mutableStateOf(subTitle)
         private set
@@ -56,7 +59,8 @@ class Colors(
         background = other.background
         toolbar = other.toolbar
         border = other.border
-        icon = other.icon
+        iconForeground = other.iconForeground
+        iconBackground = other.iconBackground
         text = other.text
         subTitle = other.subTitle
         secondaryBackground = other.secondaryBackground
@@ -72,8 +76,9 @@ class Colors(
         background = background,
         toolbar = toolbar,
         border = border,
-        icon = icon,
-        title = text,
+        iconForeground = iconForeground,
+        iconBackground = iconBackground,
+        text = text,
         subTitle = subTitle,
         secondaryBackground = secondaryBackground,
         hint = hint,
@@ -84,22 +89,23 @@ class Colors(
 }
 
 /* ------------- Light Color Schemes ------------- */
-fun lightColorScheme() = Colors(
-    primary = Green,
+fun darkColorScheme() = Colors(
+    primary = Black,
     onPrimary = Color.White,
-    background = Color.White,
-    toolbar = Color.White,
-    border = Color.White,
-    icon = BlackLight.copy(alpha = 0.5f),
-    title = BlackLight,
-    subTitle = BlackLight.copy(alpha = 0.5f),
+    background = Black,
+    toolbar = Black,
+    border = Black,
+    iconForeground = White.copy(alpha = 0.8f),
+    iconBackground = DarkGray,
+    text = White.copy(alpha = 0.8f),
+    subTitle = White.copy(alpha = 0.5f),
     secondaryBackground = Color.White.copy(alpha = 0.5f),
-    hint = BlackLight.copy(alpha = 0.5f),
-    divider = BlackLight,
-    dividerLight = BlackLight.copy(alpha = 0.05f),
+    hint = White.copy(alpha = 0.5f),
+    divider = White,
+    dividerLight = White.copy(alpha = 0.05f),
     isDark = false
 )
 
 val LocalPicVerseColors = staticCompositionLocalOf {
-    lightColorScheme()
+    darkColorScheme()
 }

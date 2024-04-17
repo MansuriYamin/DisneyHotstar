@@ -48,6 +48,12 @@ class Typography {
             fontWeight = FontWeight.Bold
         )
 
+    val titleLarge: TextStyle
+        @Composable get() = circularStdTextStyle.copy(
+            fontWeight = FontWeight.Medium,
+            fontSize = 22.ssp
+        )
+
     val subTitle: TextStyle
         @Composable get() = circularStdTextStyle.copy(
             fontWeight = FontWeight.Normal,

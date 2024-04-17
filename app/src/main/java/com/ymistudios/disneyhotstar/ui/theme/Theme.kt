@@ -2,7 +2,6 @@ package com.ymistudios.disneyhotstar.ui.theme
 
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.ProvideTextStyle
@@ -11,22 +10,20 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
 fun AppTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colors = /*if (darkTheme) darkColorScheme() else*/ lightColorScheme()
+    val colors = darkColorScheme()
+    ProvideAppTheme(colors = colors, content = content)
 
     val systemUiController = rememberSystemUiController()
+    val color = AppTheme.colors.background
     SideEffect {
-        systemUiController.setSystemBarsColor(color = Color.White)
+        systemUiController.setSystemBarsColor(color = color)
     }
-
-    ProvideAppTheme(colors = colors, content = content)
 }
 
 @Composable

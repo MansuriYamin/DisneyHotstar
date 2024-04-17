@@ -10,17 +10,9 @@ import androidx.compose.runtime.Composable
 @Immutable
 data class Dimension(
     val regular: Dp = 8.dp,
-
-    /*val horizontalSpacing: Dp = 22.dp,
-    val verticalSpacing: Dp = 25.dp,*/
-
-    val sizeMedium: Dp = 30.dp,
-    val sizeLarge: Dp = 50.dp,
-
+    
     val defaultMargin: Dp = 10.dp,
-    val marginSmall: Dp = 15.dp,
     val marginMedium: Dp = 25.dp,
-    val marginLarge: Dp = 35.dp,
 
     val horizontalListSpacing: Dp = 12.dp,
     val verticalListSpacing: Dp = 12.dp,
@@ -35,10 +27,22 @@ data class Dimension(
     val iconButtonSize: Dp = 40.dp
 ) {
     val horizontalSpacing: Dp
-        @Composable get() = 18.sdp
+        @Composable get() = 8.sdp
 
     val verticalSpacing: Dp
-        @Composable get() = 20.sdp
+        @Composable get() = 10.sdp
+
+    val iconSize: Dp
+        @Composable get() = 40.sdp
+
+    val sizeMedium: Dp
+        @Composable get() = 50.sdp
+
+    val marginSmall: Dp
+        @Composable get() = 8.sdp
+
+    val marginLarge: Dp
+        @Composable get() = 60.sdp
 }
 
 val LocalDimension = staticCompositionLocalOf {
