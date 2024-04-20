@@ -32,22 +32,6 @@ class Typography {
             fontSize = 16.ssp
         )
 
-    val titleMedium: TextStyle
-        @Composable get() = circularStdTextStyle.copy(
-            fontWeight = FontWeight.Medium,
-            fontSize = 16.ssp
-        )
-
-    val titleMediumSmall: TextStyle
-        @Composable get() = titleMedium.copy(
-            fontSize = 14.ssp
-        )
-
-    val titleBold: TextStyle
-        @Composable get() = titleMedium.copy(
-            fontWeight = FontWeight.Bold
-        )
-
     val titleLarge: TextStyle
         @Composable get() = circularStdTextStyle.copy(
             fontWeight = FontWeight.Medium,
@@ -60,25 +44,10 @@ class Typography {
             fontSize = 12.ssp
         )
 
-    val subTitleMedium: TextStyle
-        @Composable get() = subTitle.copy(
-            fontWeight = FontWeight.Medium
-        )
-
     val body: TextStyle
         @Composable get() = circularStdTextStyle.copy(
             fontWeight = FontWeight.Normal,
-            fontSize = 10.ssp
-        )
-
-    val bodySmall: TextStyle
-        @Composable get() = body.copy(
-            fontSize = 8.ssp
-        )
-
-    val bodyMedium: TextStyle
-        @Composable get() = bodySmall.copy(
-            fontWeight = FontWeight.Medium
+            fontSize = 14.ssp
         )
 
     val textFieldHint: TextStyle
@@ -99,64 +68,6 @@ class Typography {
             fontSize = 8.ssp
         )
 }
-
-/*@Immutable
-class Typography(
-    val toolbarTitle: TextStyle = circularStdTextStyle.copy(
-        fontWeight = FontWeight.Medium,
-        fontSize = 22.sp
-    ),
-
-    val titleMedium: TextStyle = circularStdTextStyle.copy(
-        fontWeight = FontWeight.Medium,
-        fontSize = 22.sp
-    ),
-
-    val titleMediumSmall: TextStyle = titleMedium.copy(
-        fontSize = 18.sp
-    ),
-
-    val titleBold: TextStyle = titleMedium.copy(
-        fontWeight = FontWeight.Bold
-    ),
-
-    val subTitle: TextStyle = circularStdTextStyle.copy(
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp
-    ),
-
-    val subTitleMedium: TextStyle = subTitle.copy(
-        fontWeight = FontWeight.Medium
-    ),
-
-    val body: TextStyle = circularStdTextStyle.copy(
-        fontWeight = FontWeight.Normal,
-        fontSize = 14.sp
-    ),
-
-    val bodySmall: TextStyle = body.copy(
-        fontSize = 12.sp
-    ),
-
-    val bodyMedium: TextStyle = circularStdTextStyle.copy(
-        fontWeight = FontWeight.Medium
-    ),
-
-    val textFieldHint: TextStyle = circularStdTextStyle.copy(
-        fontWeight = FontWeight.Normal,
-        fontSize = 14.sp
-    ),
-
-    val textField: TextStyle = circularStdTextStyle.copy(
-        fontWeight = FontWeight.Medium,
-        fontSize = 14.sp
-    ),
-
-    val textFieldError: TextStyle = circularStdTextStyle.copy(
-        fontWeight = FontWeight.Normal,
-        fontSize = 12.sp
-    )
-)*/
 
 val LocalTypography = staticCompositionLocalOf {
     Typography()

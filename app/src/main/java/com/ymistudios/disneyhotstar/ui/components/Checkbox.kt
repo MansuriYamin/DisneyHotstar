@@ -89,7 +89,7 @@ fun Checkbox(
 
         Spacer(modifier = Modifier.width(5.dp))
 
-        ProvideTextStyle(value = AppTheme.typography.subTitleMedium) {
+        ProvideTextStyle(value = AppTheme.typography.subTitle) {
             text()
         }
         Spacer(modifier = Modifier.width(5.dp))

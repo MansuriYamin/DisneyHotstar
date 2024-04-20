@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name">Disney+ Hotstar</string>
+    <string name="app_name">Hotstar</string>
     <string name="content_description_profile">Profile</string>
     <string name="title_everything">Everything</string>
     <string name="content_description_search">Search</string>
     <string name="content_description_download">Download</string>
+    <string name="content_description_movie_poster">Movie Poster</string>
 </resources>
