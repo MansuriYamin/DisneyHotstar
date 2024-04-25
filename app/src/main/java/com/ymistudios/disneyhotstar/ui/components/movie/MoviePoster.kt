@@ -10,6 +10,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import coil.compose.AsyncImage
 import com.ymistudios.disneyhotstar.R
 import com.ymistudios.disneyhotstar.data.pojo.movie.MoviePoster
@@ -17,16 +18,20 @@ import com.ymistudios.disneyhotstar.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MoviePoster(moviePoster: MoviePoster) {
-    Card(shape = AppTheme.shapes.card, onClick = {}) {
+fun MoviePoster(
+    moviePoster: MoviePoster,
+    width: Dp = AppTheme.dimension.moviePosterWidth,
+    onClick: (moviePoster: MoviePoster) -> Unit
+) {
+    Card(shape = AppTheme.shapes.card, onClick = { onClick(moviePoster) }) {
         AsyncImage(
             modifier = Modifier
-                .width(AppTheme.dimension.moviePosterWidth)
+                .width(width)
                 .aspectRatio(2 / 3f),
             model = moviePoster.poster,
             placeholder = painterResource(id = R.drawable.ic_launcher_background),
-            contentDescription = stringResource(R.string.content_description_movie_poster),
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
+            contentDescription = stringResource(R.string.content_description_movie_poster)
         )
     }
 }
@@ -34,5 +39,5 @@ fun MoviePoster(moviePoster: MoviePoster) {
 @Preview
 @Composable
 fun MoviePosterPrev() {
-    MoviePoster(moviePoster = MoviePoster(poster = ""))
+    MoviePoster(moviePoster = MoviePoster(poster = ""), onClick = {})
 }

@@ -32,7 +32,7 @@ class Typography {
             fontSize = 16.ssp
         )
 
-    val titleLarge: TextStyle
+    val title: TextStyle
         @Composable get() = circularStdTextStyle.copy(
             fontWeight = FontWeight.Medium,
             fontSize = 22.ssp

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.ymistudios.disneyhotstar.ui.theme.AppTheme
 
 @Composable
 fun Scaffold(
@@ -15,7 +16,8 @@ fun Scaffold(
 ) {
     Scaffold(
         topBar = topBar,
-        bottomBar = bottomBar
+        bottomBar = bottomBar,
+        containerColor = AppTheme.colors.background
     ) {
         Box(modifier = Modifier.padding(it)) {
             content(it)

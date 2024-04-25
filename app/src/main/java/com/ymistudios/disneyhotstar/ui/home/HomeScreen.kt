@@ -27,12 +27,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.ymistudios.disneyhotstar.R
 import com.ymistudios.disneyhotstar.data.pojo.movie.Movie
+import com.ymistudios.disneyhotstar.data.pojo.movie.MoviePoster
 import com.ymistudios.disneyhotstar.di.module.injectNavigator
 import com.ymistudios.disneyhotstar.domain.navigator.Navigator
 import com.ymistudios.disneyhotstar.ui.components.Icon
 import com.ymistudios.disneyhotstar.ui.components.IconButton
 import com.ymistudios.disneyhotstar.ui.components.Text
 import com.ymistudios.disneyhotstar.ui.components.movie.MoviePoster
+import com.ymistudios.disneyhotstar.ui.navigation.destinations.DashboardDestinations
 import com.ymistudios.disneyhotstar.ui.theme.AppTheme
 import com.ymistudios.disneyhotstar.ui.toolbarmanager.Toolbar
 import com.ymistudios.disneyhotstar.ui.toolbarmanager.ToolbarManager
@@ -48,12 +50,20 @@ fun HomeScreen(
 
     val uiState by homeViewModel.uiState.collectAsStateWithLifecycle()
 
-    HomeScreenContent(movieList = uiState.movieList)
+    HomeScreenContent(
+        movieList = uiState.movieList,
+        onMoviePosterClick = {
+            navigator.navigate(DashboardDestinations.MovieDetailsDestination())
+        }
+    )
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun HomeScreenContent(movieList: List<Movie>) {
+private fun HomeScreenContent(
+    movieList: List<Movie>,
+    onMoviePosterClick: (moviePoster: MoviePoster) -> Unit
+) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -74,22 +84,25 @@ private fun HomeScreenContent(movieList: List<Movie>) {
             }
 
             item {
-                MovieList(movie)
+                MovieList(movie = movie, onMoviePosterClick = onMoviePosterClick)
             }
         }
     }
 }
 
 @Composable
-private fun MovieList(movie: Movie) {
+private fun MovieList(movie: Movie, onMoviePosterClick: (moviePoster: MoviePoster) -> Unit) {
     LazyRow(
-        horizontalArrangement = Arrangement.spacedBy(AppTheme.dimension.small),
+        horizontalArrangement = Arrangement.spacedBy(AppTheme.dimension.default),
         contentPadding = PaddingValues(
             horizontal = AppTheme.dimension.horizontalSpacing
         )
     ) {
         items(movie.moviePosterList) { moviePoster ->
-            MoviePoster(moviePoster = moviePoster)
+            MoviePoster(
+                moviePoster = moviePoster,
+                onClick = onMoviePosterClick
+            )
         }
     }
 }
@@ -100,7 +113,7 @@ private fun MovieListHeader(movie: Movie) {
         modifier = Modifier
             .padding(
                 top = AppTheme.dimension.medium,
-                bottom = AppTheme.dimension.small
+                bottom = AppTheme.dimension.default
             )
             .horizontalSpacing(),
         text = movie.header,
@@ -134,12 +147,12 @@ private fun TopHeader() {
         modifier = Modifier
             .background(AppTheme.colors.background)
             .horizontalSpacing()
-            .padding(vertical = AppTheme.dimension.small),
+            .padding(vertical = AppTheme.dimension.default),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             text = stringResource(R.string.title_everything),
-            style = AppTheme.typography.titleLarge
+            style = AppTheme.typography.title
         )
 
         Icon(
@@ -157,7 +170,7 @@ private fun TopHeader() {
         }
 
         IconButton(
-            modifier = Modifier.padding(start = AppTheme.dimension.small),
+            modifier = Modifier.padding(start = AppTheme.dimension.default),
             onClick = { }
         ) {
             Icon(
@@ -171,5 +184,5 @@ private fun TopHeader() {
 @Preview(showBackground = true)
 @Composable
 private fun HomeScreenContentPrev() {
-    HomeScreenContent(emptyList())
+    HomeScreenContent(movieList = emptyList(), onMoviePosterClick = {})
 }

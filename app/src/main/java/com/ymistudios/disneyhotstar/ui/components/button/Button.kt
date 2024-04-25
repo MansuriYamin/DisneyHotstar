@@ -31,7 +31,10 @@ fun Button(
     loading: Boolean = false,
     enabled: Boolean = !loading,
     shape: Shape = ButtonDefaults.shape,
-    colors: ButtonColors = ButtonDefaults.buttonColors(containerColor = AppTheme.colors.primary),
+    colors: ButtonColors = ButtonDefaults.buttonColors(
+        containerColor = AppTheme.colors.primary,
+        contentColor = AppTheme.colors.onPrimary
+    ),
     elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
     border: BorderStroke? = null,
     contentPadding: PaddingValues = ContentPadding,
@@ -63,18 +66,21 @@ fun Button(
             ProvideTextStyle(
                 value = AppTheme.typography.body,
                 content = {
-                    Box(contentAlignment = Alignment.Center) {
-                        LoadingIndicator(
-                            animating = loading,
-                            modifier = Modifier.graphicsLayer { alpha = loadingAlpha }
-                        )
+            Box(contentAlignment = Alignment.Center) {
+                LoadingIndicator(
+                    animating = loading,
+                    modifier = Modifier.graphicsLayer { alpha = loadingAlpha }
+                )
 
-                        Row(Modifier.graphicsLayer { alpha = contentAlpha }) {
-                            content()
-                        }
-                    }
+                Row(
+                    modifier = Modifier.graphicsLayer { alpha = contentAlpha },
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    content()
                 }
-            )
+            }
+}
+)
         }
     )
 }

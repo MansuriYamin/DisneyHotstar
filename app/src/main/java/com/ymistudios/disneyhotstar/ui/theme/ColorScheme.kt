@@ -18,6 +18,7 @@ class Colors(
     iconBackground: Color,
     text: Color,
     subTitle: Color,
+    card: Color,
     secondaryBackground: Color,
     hint: Color,
     divider: Color,
@@ -42,6 +43,8 @@ class Colors(
         private set
     var subTitle by mutableStateOf(subTitle)
         private set
+    var card by mutableStateOf(card)
+        private set
     var secondaryBackground by mutableStateOf(secondaryBackground)
         private set
     var hint by mutableStateOf(hint)
@@ -63,6 +66,7 @@ class Colors(
         iconBackground = other.iconBackground
         text = other.text
         subTitle = other.subTitle
+        card = other.card
         secondaryBackground = other.secondaryBackground
         hint = other.hint
         divider = other.divider
@@ -80,6 +84,7 @@ class Colors(
         iconBackground = iconBackground,
         text = text,
         subTitle = subTitle,
+        card = card,
         secondaryBackground = secondaryBackground,
         hint = hint,
         divider = divider,
@@ -90,15 +95,16 @@ class Colors(
 
 /* ------------- Light Color Schemes ------------- */
 fun darkColorScheme() = Colors(
-    primary = Black,
-    onPrimary = Color.White,
+    primary = White,
+    onPrimary = Black,
     background = Black,
     toolbar = Black,
     border = Black,
     iconForeground = White.copy(alpha = 0.8f),
-    iconBackground = DarkGray,
+    iconBackground = Gray,
     text = White.copy(alpha = 0.8f),
     subTitle = White.copy(alpha = 0.5f),
+    card = White.copy(alpha = 0.1f),
     secondaryBackground = Color.White.copy(alpha = 0.5f),
     hint = White.copy(alpha = 0.5f),
     divider = White,
