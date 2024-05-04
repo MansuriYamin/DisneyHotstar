@@ -17,20 +17,6 @@ class DefaultNavigator @Inject constructor() : Navigator {
         get() = navigationActionChannel.receiveAsFlow()
 
     override fun navigate(
-        route: Route,
-        onlyIfResumed: Boolean,
-        builder: NavOptionsBuilder.() -> Unit
-    ) {
-        /*navigationActionChannel.trySend(
-            NavigationAction.NavigateTo(
-                destination = route,
-                onlyIfResumed = onlyIfResumed,
-                builder = builder
-            )
-        )*/
-    }
-
-    override fun navigate(
         destination: Destination,
         onlyIfResumed: Boolean,
         builder: NavOptionsBuilder.() -> Unit
@@ -48,10 +34,10 @@ class DefaultNavigator @Inject constructor() : Navigator {
         navigationActionChannel.trySend(NavigationAction.NavigateBack())
     }
 
-    override fun navigateBack(route: Route, inclusive: Boolean, saveState: Boolean) {
+    override fun navigateBack(destination: Destination, inclusive: Boolean, saveState: Boolean) {
         navigationActionChannel.trySend(
             NavigationAction.NavigateBack(
-                route = route,
+                destination = destination,
                 inclusive = inclusive,
                 saveState = saveState
             )

@@ -10,12 +10,6 @@ interface Navigator {
     val navigationActionFlow: Flow<NavigationAction>
 
     fun navigate(
-        route: Route,
-        onlyIfResumed: Boolean = true,
-        builder: NavOptionsBuilder.() -> Unit = {}
-    )
-
-    fun navigate(
         destination: Destination,
         onlyIfResumed: Boolean = true,
         builder: NavOptionsBuilder.() -> Unit = {}
@@ -24,7 +18,7 @@ interface Navigator {
     fun navigateBack()
 
     fun navigateBack(
-        route: Route,
+        destination: Destination,
         inclusive: Boolean = false,
         saveState: Boolean = false
     )

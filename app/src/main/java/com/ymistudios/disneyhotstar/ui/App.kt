@@ -35,12 +35,12 @@ fun App(
     navigator: Navigator = injectNavigator()
 ) {
     AppTheme {
-        val picVerseAppState = rememberPicVerseAppState()
-        val toolbarState by picVerseAppState.toolbarManager.toolbarState.collectAsStateWithLifecycle()
+        val appState = rememberAppState()
+        val toolbarState by appState.toolbarManager.toolbarState.collectAsStateWithLifecycle()
 
-        HandleNavigation(
+        AppNavigation(
             navigationActionFlow = appViewModel.navigationActionFlow,
-            appState = picVerseAppState
+            appState = appState
         )
 
         Scaffold(
@@ -60,7 +60,7 @@ fun App(
             }
         ) {
             NavHost(
-                navController = picVerseAppState.navController,
+                navController = appState.navController,
                 startDestination = DashboardDestinations
             ) {
                 dashboardNavGraph()
@@ -70,7 +70,7 @@ fun App(
 }
 
 @Composable
-private fun HandleNavigation(
+private fun AppNavigation(
     navigationActionFlow: Flow<NavigationAction>,
     appState: AppState
 ) {
@@ -86,9 +86,9 @@ private fun HandleNavigation(
                 }
 
                 is NavigationAction.NavigateBack -> {
-                    navigationAction.route?.let { route ->
+                    navigationAction.destination?.let { destination ->
                         appState.navigateBack(
-                            route = route,
+                            destination = destination,
                             inclusive = navigationAction.inclusive,
                             saveState = navigationAction.saveState
                         )

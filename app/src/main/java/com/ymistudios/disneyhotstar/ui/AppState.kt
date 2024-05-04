@@ -1,6 +1,5 @@
 package com.ymistudios.disneyhotstar.ui
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
@@ -11,8 +10,6 @@ import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.rememberNavController
 import com.ymistudios.disneyhotstar.ui.navigation.destinations.DashboardDestinations
 import com.ymistudios.disneyhotstar.ui.navigation.destinations.Destination
-import com.ymistudios.disneyhotstar.ui.navigation.destinations.Route
-import com.ymistudios.disneyhotstar.ui.navigation.destinations.TAG_NAVIGATION
 import com.ymistudios.disneyhotstar.ui.toolbarmanager.ToolbarManager
 
 @Stable
@@ -20,19 +17,6 @@ class AppState(
     val navController: NavHostController,
     val toolbarManager: ToolbarManager
 ) {
-
-    fun navigate(
-        route: Route,
-        onlyIfResumed: Boolean = true,
-        builder: NavOptionsBuilder.() -> Unit = {}
-    ) {
-        if (onlyIfResumed && navController.currentBackStackEntry?.lifecycleIsResumed() == false)
-            return
-
-        Log.d(TAG_NAVIGATION, "navigate: ${route.route}")
-        navController.navigate(DashboardDestinations.MovieDetails)
-        // navController.navigate(route = route, builder = builder)
-    }
 
     fun navigate(
         destination: Destination,
@@ -50,11 +34,14 @@ class AppState(
     }
 
     fun navigateBack(
-        route: Route,
+        destination: Destination,
         inclusive: Boolean = false,
         saveState: Boolean = false
     ) {
-        navController.popBackStack(route = route, inclusive = inclusive, saveState = saveState)
+        navController.popBackStack<DashboardDestinations.Home>(
+            inclusive = inclusive,
+            saveState = saveState
+        )
     }
 
     inline fun <reified T> navigateBackWithResult(key: String, value: T) {
@@ -67,7 +54,7 @@ class AppState(
 }
 
 @Composable
-fun rememberPicVerseAppState(
+fun rememberAppState(
     navHostController: NavHostController = rememberNavController(),
     toolbarManager: ToolbarManager = ToolbarManager
 ): AppState {
