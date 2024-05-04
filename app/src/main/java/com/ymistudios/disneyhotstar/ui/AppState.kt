@@ -9,14 +9,14 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.rememberNavController
+import com.ymistudios.disneyhotstar.ui.navigation.destinations.DashboardDestinations
+import com.ymistudios.disneyhotstar.ui.navigation.destinations.Destination
 import com.ymistudios.disneyhotstar.ui.navigation.destinations.Route
 import com.ymistudios.disneyhotstar.ui.navigation.destinations.TAG_NAVIGATION
-import com.ymistudios.disneyhotstar.ui.navigation.navigate
-import com.ymistudios.disneyhotstar.ui.navigation.popBackStack
 import com.ymistudios.disneyhotstar.ui.toolbarmanager.ToolbarManager
 
 @Stable
-class PicVerseAppState(
+class AppState(
     val navController: NavHostController,
     val toolbarManager: ToolbarManager
 ) {
@@ -30,7 +30,19 @@ class PicVerseAppState(
             return
 
         Log.d(TAG_NAVIGATION, "navigate: ${route.route}")
-        navController.navigate(route = route, builder = builder)
+        navController.navigate(DashboardDestinations.MovieDetails)
+        // navController.navigate(route = route, builder = builder)
+    }
+
+    fun navigate(
+        destination: Destination,
+        onlyIfResumed: Boolean = true,
+        builder: NavOptionsBuilder.() -> Unit = {}
+    ) {
+        if (onlyIfResumed && navController.currentBackStackEntry?.lifecycleIsResumed() == false)
+            return
+
+        navController.navigate(destination, builder = builder)
     }
 
     fun navigateBack() {
@@ -58,9 +70,9 @@ class PicVerseAppState(
 fun rememberPicVerseAppState(
     navHostController: NavHostController = rememberNavController(),
     toolbarManager: ToolbarManager = ToolbarManager
-): PicVerseAppState {
+): AppState {
     return remember(navHostController) {
-        PicVerseAppState(navController = navHostController, toolbarManager = toolbarManager)
+        AppState(navController = navHostController, toolbarManager = toolbarManager)
     }
 }
 

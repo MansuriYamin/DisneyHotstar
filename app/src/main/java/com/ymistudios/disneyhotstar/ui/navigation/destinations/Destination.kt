@@ -11,35 +11,35 @@ data class Route(
 )
 
 sealed interface Destination {
-    val baseRoute
+    /*val baseRoute
         get() = RouteBuilder.buildBaseRoute(this)
     val route: String
 
-    val arguments: List<NamedNavArgument>
+    val arguments: List<NamedNavArgument>*/
 }
 
 sealed class NoArgDestination : Destination {
-    override val route: String
-        get() = baseRoute
+    /*override*/ val route: String
+        get() = "baseRoute"
 
-    override val arguments: List<NamedNavArgument>
+    /*override*/ val arguments: List<NamedNavArgument>
         get() = emptyList()
 
-    operator fun invoke(): Route = Route(baseRoute)
+    operator fun invoke(): Route = Route("baseRoute")
 }
 
 sealed class ArgDestination<T> : Destination {
 
     private val keys: List<String>
-        get() = arguments.map { it.name }
+        get() = emptyList()//arguments.map { it.name }
 
-    override val route: String
-        get() = RouteBuilder.buildPlaceholderRoute(baseRoute = baseRoute, keys = keys)
+    /*override*/ val route: String
+        get() = RouteBuilder.buildPlaceholderRoute(baseRoute = "baseRoute", keys = keys)
 
     abstract operator fun invoke(data: T): Route
 
     abstract fun getArgs(bundle: Bundle?): T?
 
     fun buildArgRoute(vararg values: Any) =
-        RouteBuilder.buildArgRoute(baseRoute = baseRoute, *values)
+        RouteBuilder.buildArgRoute(baseRoute = "baseRoute", *values)
 }

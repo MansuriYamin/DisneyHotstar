@@ -40,7 +40,7 @@ fun App(
 
         HandleNavigation(
             navigationActionFlow = appViewModel.navigationActionFlow,
-            picVerseAppState = picVerseAppState
+            appState = picVerseAppState
         )
 
         Scaffold(
@@ -72,14 +72,14 @@ fun App(
 @Composable
 private fun HandleNavigation(
     navigationActionFlow: Flow<NavigationAction>,
-    picVerseAppState: PicVerseAppState
+    appState: AppState
 ) {
     LaunchedEffect(Unit) {
         navigationActionFlow.onEach { navigationAction ->
             when (navigationAction) {
                 is NavigationAction.NavigateTo -> {
-                    picVerseAppState.navigate(
-                        route = navigationAction.destination,
+                    appState.navigate(
+                        destination = navigationAction.destination,
                         onlyIfResumed = navigationAction.onlyIfResumed,
                         builder = navigationAction.builder
                     )
@@ -87,18 +87,18 @@ private fun HandleNavigation(
 
                 is NavigationAction.NavigateBack -> {
                     navigationAction.route?.let { route ->
-                        picVerseAppState.navigateBack(
+                        appState.navigateBack(
                             route = route,
                             inclusive = navigationAction.inclusive,
                             saveState = navigationAction.saveState
                         )
                     } ?: run {
-                        picVerseAppState.navigateBack()
+                        appState.navigateBack()
                     }
                 }
 
                 is NavigationAction.NavigateBackWithResult<*> -> {
-                    picVerseAppState.navigateBackWithResult(
+                    appState.navigateBackWithResult(
                         key = navigationAction.key,
                         value = navigationAction.value
                     )

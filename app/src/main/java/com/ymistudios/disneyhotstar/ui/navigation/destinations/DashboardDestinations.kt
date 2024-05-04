@@ -1,6 +1,12 @@
 package com.ymistudios.disneyhotstar.ui.navigation.destinations
 
-data object DashboardDestinations : NoArgDestination() {
-    data object HomeDestination : NoArgDestination()
-    data object MovieDetailsDestination : NoArgDestination()
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object DashboardDestinations : Destination {
+    @Serializable
+    data object Home : Destination
+
+    @Serializable
+    data class MovieDetails(val image: String) : Destination
 }

@@ -17,7 +17,7 @@ fun NavOptionsBuilder.popUpTo(
     destination: Destination,
     popUpToBuilder: PopUpToBuilder.() -> Unit = {}
 ) {
-    popUpTo(route = destination.route, popUpToBuilder = popUpToBuilder)
+    // popUpTo(route = destination.route, popUpToBuilder = popUpToBuilder)
 }
 
 fun NavController.popBackStack(

@@ -1,6 +1,7 @@
 package com.ymistudios.disneyhotstar.domain.navigator
 
 import androidx.navigation.NavOptionsBuilder
+import com.ymistudios.disneyhotstar.ui.navigation.destinations.Destination
 import com.ymistudios.disneyhotstar.ui.navigation.destinations.Route
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -20,9 +21,23 @@ class DefaultNavigator @Inject constructor() : Navigator {
         onlyIfResumed: Boolean,
         builder: NavOptionsBuilder.() -> Unit
     ) {
-        navigationActionChannel.trySend(
+        /*navigationActionChannel.trySend(
             NavigationAction.NavigateTo(
                 destination = route,
+                onlyIfResumed = onlyIfResumed,
+                builder = builder
+            )
+        )*/
+    }
+
+    override fun navigate(
+        destination: Destination,
+        onlyIfResumed: Boolean,
+        builder: NavOptionsBuilder.() -> Unit
+    ) {
+        navigationActionChannel.trySend(
+            NavigationAction.NavigateTo(
+                destination = destination,
                 onlyIfResumed = onlyIfResumed,
                 builder = builder
             )

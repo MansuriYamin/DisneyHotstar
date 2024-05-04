@@ -8,16 +8,15 @@ import com.ymistudios.disneyhotstar.ui.navigation.destinations.DashboardDestinat
 import com.ymistudios.disneyhotstar.ui.navigation.navigation
 
 fun NavGraphBuilder.dashboardNavGraph() {
-    navigation(
-        destination = DashboardDestinations,
-        startDestination = DashboardDestinations.HomeDestination
+    navigation<DashboardDestinations>(
+        startDestination = DashboardDestinations.Home
     ) {
-        composable(DashboardDestinations.HomeDestination) {
+        composable<DashboardDestinations.Home> { _, _ ->
             HomeScreen()
         }
 
-        composable(DashboardDestinations.MovieDetailsDestination) {
-            MovieDetailsScreen()
+        composable<DashboardDestinations.MovieDetails> { _, movieDetails ->
+            MovieDetailsScreen(movieDetails)
         }
     }
 }

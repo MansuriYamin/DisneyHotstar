@@ -40,18 +40,19 @@ import com.ymistudios.disneyhotstar.ui.components.IconButton
 import com.ymistudios.disneyhotstar.ui.components.Text
 import com.ymistudios.disneyhotstar.ui.components.button.Button
 import com.ymistudios.disneyhotstar.ui.components.movie.MoviePoster
+import com.ymistudios.disneyhotstar.ui.navigation.destinations.DashboardDestinations
 import com.ymistudios.disneyhotstar.ui.theme.AppTheme
 import com.ymistudios.disneyhotstar.ui.theme.Black
 import com.ymistudios.disneyhotstar.ui.theme.White
 import com.ymistudios.disneyhotstar.utils.extension.horizontalSpacing
 
 @Composable
-fun MovieDetailsScreen() {
-    MovieDetailsScreenContent()
+fun MovieDetailsScreen(movieDetails: DashboardDestinations.MovieDetails) {
+    MovieDetailsScreenContent(movieDetails)
 }
 
 @Composable
-private fun MovieDetailsScreenContent() {
+private fun MovieDetailsScreenContent(movieDetails: DashboardDestinations.MovieDetails) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -59,7 +60,7 @@ private fun MovieDetailsScreenContent() {
         contentPadding = PaddingValues(bottom = AppTheme.dimension.medium)
     ) {
         item {
-            MovieHeader()
+            MovieHeader(movieDetails)
             MovieBasicInfo()
             MovieDescription()
             SimilarMovies()
@@ -68,14 +69,14 @@ private fun MovieDetailsScreenContent() {
 }
 
 @Composable
-private fun MovieHeader() {
+private fun MovieHeader(movieDetails: DashboardDestinations.MovieDetails) {
     Box {
         AsyncImage(
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(2 / 3f)
                 .clip(AppTheme.shapes.bottomRoundedCorners),
-            model = "https://i.pinimg.com/236x/aa/39/57/aa39574b40081259b8b674dcc78c86d3.jpg",
+            model = movieDetails.image,//"https://i.pinimg.com/236x/aa/39/57/aa39574b40081259b8b674dcc78c86d3.jpg",
             placeholder = painterResource(id = R.drawable.ic_launcher_background),
             contentScale = ContentScale.Crop,
             contentDescription = stringResource(id = R.string.content_description_movie_poster),
@@ -371,5 +372,5 @@ private fun SimilarMovies() {
 @Preview
 @Composable
 private fun MovieDetailsScreenPrev() {
-    MovieDetailsScreenContent()
+    //MovieDetailsScreenContent()
 }

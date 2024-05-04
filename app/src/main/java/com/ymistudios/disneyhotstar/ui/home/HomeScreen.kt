@@ -53,7 +53,7 @@ fun HomeScreen(
     HomeScreenContent(
         movieList = uiState.movieList,
         onMoviePosterClick = {
-            navigator.navigate(DashboardDestinations.MovieDetailsDestination())
+            navigator.navigate(DashboardDestinations.MovieDetails(it.poster))
         }
     )
 }

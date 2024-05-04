@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.ymistudios.disneyhotstar.ui.navigation.destinations.DashboardDestinations
 import com.ymistudios.disneyhotstar.ui.navigation.destinations.Destination
 
 @Composable
@@ -16,7 +17,7 @@ fun NavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = startDestination.route,
+        startDestination = startDestination,
         modifier = modifier,
         builder = builder
     )

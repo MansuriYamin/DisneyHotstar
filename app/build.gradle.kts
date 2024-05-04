@@ -6,6 +6,7 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("kotlin-parcelize")
+    kotlin("plugin.serialization") version "1.9.23"
 }
 
 kotlin {
@@ -65,7 +66,7 @@ android {
         }
     }
     androidResources {
-       // generateLocaleConfig = true
+        // generateLocaleConfig = true
     }
     defaultConfig {
         resourceConfigurations.plus(listOf("en", "ar"))
@@ -93,7 +94,10 @@ dependencies {
     ksp("io.github.raamcosta.compose-destinations:ksp:1.9.55")*/
 
     // Compose Navigation
-    implementation("androidx.navigation:navigation-compose:2.7.6")
+    implementation("androidx.navigation:navigation-compose:2.8.0-alpha08")
+
+    // Serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 
     // Compose LiveData
     implementation("androidx.compose.runtime:runtime-livedata")
