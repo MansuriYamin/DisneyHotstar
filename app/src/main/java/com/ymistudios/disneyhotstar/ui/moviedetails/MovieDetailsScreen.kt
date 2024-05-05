@@ -35,6 +35,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.ymistudios.disneyhotstar.R
+import com.ymistudios.disneyhotstar.di.module.injectNavigator
+import com.ymistudios.disneyhotstar.domain.navigator.Navigator
 import com.ymistudios.disneyhotstar.ui.components.Icon
 import com.ymistudios.disneyhotstar.ui.components.IconButton
 import com.ymistudios.disneyhotstar.ui.components.Text
@@ -47,12 +49,21 @@ import com.ymistudios.disneyhotstar.ui.theme.White
 import com.ymistudios.disneyhotstar.utils.extension.horizontalSpacing
 
 @Composable
-fun MovieDetailsScreen(movieDetails: DashboardDestinations.MovieDetails) {
-    MovieDetailsScreenContent(movieDetails)
+fun MovieDetailsScreen(
+    navigator: Navigator = injectNavigator(),
+    movieDetails: DashboardDestinations.MovieDetails
+) {
+    MovieDetailsScreenContent(
+        movieDetails = movieDetails,
+        onClose = { navigator.navigateBack() }
+    )
 }
 
 @Composable
-private fun MovieDetailsScreenContent(movieDetails: DashboardDestinations.MovieDetails) {
+private fun MovieDetailsScreenContent(
+    movieDetails: DashboardDestinations.MovieDetails,
+    onClose: () -> Unit
+) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -60,7 +71,7 @@ private fun MovieDetailsScreenContent(movieDetails: DashboardDestinations.MovieD
         contentPadding = PaddingValues(bottom = AppTheme.dimension.medium)
     ) {
         item {
-            MovieHeader(movieDetails)
+            MovieHeader(movieDetails = movieDetails, onClose = onClose)
             MovieBasicInfo()
             MovieDescription()
             SimilarMovies()
@@ -69,14 +80,17 @@ private fun MovieDetailsScreenContent(movieDetails: DashboardDestinations.MovieD
 }
 
 @Composable
-private fun MovieHeader(movieDetails: DashboardDestinations.MovieDetails) {
+private fun MovieHeader(
+    movieDetails: DashboardDestinations.MovieDetails,
+    onClose: () -> Unit
+) {
     Box {
         AsyncImage(
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(2 / 3f)
                 .clip(AppTheme.shapes.bottomRoundedCorners),
-            model = movieDetails.image,//"https://i.pinimg.com/236x/aa/39/57/aa39574b40081259b8b674dcc78c86d3.jpg",
+            model = movieDetails.image,
             placeholder = painterResource(id = R.drawable.ic_launcher_background),
             contentScale = ContentScale.Crop,
             contentDescription = stringResource(id = R.string.content_description_movie_poster),
@@ -89,7 +103,7 @@ private fun MovieHeader(movieDetails: DashboardDestinations.MovieDetails) {
                     top = AppTheme.dimension.medium,
                     end = AppTheme.dimension.medium
                 ),
-            onClick = { }
+            onClick = onClose
         ) {
             Icon(
                 resId = R.drawable.ic_close,
@@ -372,5 +386,8 @@ private fun SimilarMovies() {
 @Preview
 @Composable
 private fun MovieDetailsScreenPrev() {
-    //MovieDetailsScreenContent()
+    MovieDetailsScreenContent(
+        movieDetails = DashboardDestinations.MovieDetails(""),
+        onClose = {}
+    )
 }

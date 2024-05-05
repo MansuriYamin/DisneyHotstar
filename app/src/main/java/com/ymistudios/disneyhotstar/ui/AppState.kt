@@ -8,7 +8,6 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.rememberNavController
-import com.ymistudios.disneyhotstar.ui.navigation.destinations.DashboardDestinations
 import com.ymistudios.disneyhotstar.ui.navigation.destinations.Destination
 import com.ymistudios.disneyhotstar.ui.toolbarmanager.ToolbarManager
 
@@ -38,7 +37,8 @@ class AppState(
         inclusive: Boolean = false,
         saveState: Boolean = false
     ) {
-        navController.popBackStack<DashboardDestinations.Home>(
+        navController.popBackStack(
+            route = destination,
             inclusive = inclusive,
             saveState = saveState
         )

@@ -2,7 +2,6 @@ package com.ymistudios.disneyhotstar.domain.navigator
 
 import androidx.navigation.NavOptionsBuilder
 import com.ymistudios.disneyhotstar.ui.navigation.destinations.Destination
-import com.ymistudios.disneyhotstar.ui.navigation.destinations.Route
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -34,7 +33,11 @@ class DefaultNavigator @Inject constructor() : Navigator {
         navigationActionChannel.trySend(NavigationAction.NavigateBack())
     }
 
-    override fun navigateBack(destination: Destination, inclusive: Boolean, saveState: Boolean) {
+    override fun navigateBack(
+        destination: Destination,
+        inclusive: Boolean,
+        saveState: Boolean
+    ) {
         navigationActionChannel.trySend(
             NavigationAction.NavigateBack(
                 destination = destination,

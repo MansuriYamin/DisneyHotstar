@@ -1,12 +1,6 @@
 package com.ymistudios.disneyhotstar.ui.navigation
 
-import androidx.navigation.NavController
-import androidx.navigation.NavOptionsBuilder
-import androidx.navigation.PopUpToBuilder
-import com.ymistudios.disneyhotstar.ui.navigation.destinations.Destination
-import com.ymistudios.disneyhotstar.ui.navigation.destinations.Route
-
-fun NavController.navigate(
+/*fun NavController.navigate(
     route: Route,
     builder: NavOptionsBuilder.() -> Unit
 ) {
@@ -26,4 +20,4 @@ fun NavController.popBackStack(
     saveState: Boolean = false
 ) {
     popBackStack(route = route.route, inclusive = inclusive, saveState = saveState)
-}
+}*/

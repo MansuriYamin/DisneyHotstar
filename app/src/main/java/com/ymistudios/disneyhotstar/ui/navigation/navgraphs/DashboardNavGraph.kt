@@ -16,7 +16,7 @@ fun NavGraphBuilder.dashboardNavGraph() {
         }
 
         composable<DashboardDestinations.MovieDetails> { _, movieDetails ->
-            MovieDetailsScreen(movieDetails)
+            MovieDetailsScreen(movieDetails = movieDetails)
         }
     }
 }

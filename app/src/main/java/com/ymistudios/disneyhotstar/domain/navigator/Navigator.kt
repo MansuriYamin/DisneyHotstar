@@ -2,7 +2,6 @@ package com.ymistudios.disneyhotstar.domain.navigator
 
 import androidx.navigation.NavOptionsBuilder
 import com.ymistudios.disneyhotstar.ui.navigation.destinations.Destination
-import com.ymistudios.disneyhotstar.ui.navigation.destinations.Route
 import kotlinx.coroutines.flow.Flow
 
 interface Navigator {
