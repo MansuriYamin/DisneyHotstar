@@ -1,5 +1,8 @@
 package com.ymistudios.disneyhotstar.ui.moviedetails
 
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -48,20 +51,32 @@ import com.ymistudios.disneyhotstar.ui.theme.Black
 import com.ymistudios.disneyhotstar.ui.theme.White
 import com.ymistudios.disneyhotstar.utils.extension.horizontalSpacing
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun MovieDetailsScreen(
     navigator: Navigator = injectNavigator(),
-    movieDetails: DashboardDestinations.MovieDetails
+    movieDetails: DashboardDestinations.MovieDetails,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope
 ) {
-    MovieDetailsScreenContent(
-        movieDetails = movieDetails,
-        onClose = { navigator.navigateBack() }
-    )
+    with(sharedTransitionScope) {
+        MovieDetailsScreenContent(
+            movieDetails = movieDetails,
+            sharedElement = {
+                sharedElement(
+                    state = sharedTransitionScope.rememberSharedContentState(key = it),
+                    animatedVisibilityScope = animatedContentScope
+                )
+            },
+            onClose = { navigator.navigateBack() }
+        )
+    }
 }
 
 @Composable
 private fun MovieDetailsScreenContent(
     movieDetails: DashboardDestinations.MovieDetails,
+    sharedElement: @Composable Modifier.(String) -> Modifier = { Modifier },
     onClose: () -> Unit
 ) {
     LazyColumn(
@@ -71,7 +86,11 @@ private fun MovieDetailsScreenContent(
         contentPadding = PaddingValues(bottom = AppTheme.dimension.medium)
     ) {
         item {
-            MovieHeader(movieDetails = movieDetails, onClose = onClose)
+            MovieHeader(
+                movieDetails = movieDetails,
+                sharedElement = sharedElement,
+                onClose = onClose
+            )
             MovieBasicInfo()
             MovieDescription()
             SimilarMovies()
@@ -82,11 +101,13 @@ private fun MovieDetailsScreenContent(
 @Composable
 private fun MovieHeader(
     movieDetails: DashboardDestinations.MovieDetails,
+    sharedElement: @Composable Modifier.(String) -> Modifier = { Modifier },
     onClose: () -> Unit
 ) {
     Box {
         AsyncImage(
             modifier = Modifier
+                .sharedElement("image-${movieDetails.id}")
                 .fillMaxWidth()
                 .aspectRatio(2 / 3f)
                 .clip(AppTheme.shapes.bottomRoundedCorners),
@@ -372,7 +393,7 @@ private fun SimilarMovies() {
                 (0..11).map {
                     MoviePoster(
                         moviePoster = com.ymistudios.disneyhotstar.data.pojo.movie.MoviePoster(
-                            "https://i.pinimg.com/236x/bf/0f/53/bf0f539e1d82d62725911e2b75056f46.jpg"
+                            poster = "https://i.pinimg.com/236x/bf/0f/53/bf0f539e1d82d62725911e2b75056f46.jpg"
                         ),
                         width = itemSize,
                         onClick = {}
@@ -387,7 +408,7 @@ private fun SimilarMovies() {
 @Composable
 private fun MovieDetailsScreenPrev() {
     MovieDetailsScreenContent(
-        movieDetails = DashboardDestinations.MovieDetails(""),
+        movieDetails = DashboardDestinations.MovieDetails("", 0),
         onClose = {}
     )
 }

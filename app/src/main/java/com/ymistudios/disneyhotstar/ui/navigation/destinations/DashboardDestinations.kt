@@ -8,5 +8,5 @@ data object DashboardDestinations : Destination {
     data object Home : Destination
 
     @Serializable
-    data class MovieDetails(val image: String) : Destination
+    data class MovieDetails(val image: String, val id: Int) : Destination
 }

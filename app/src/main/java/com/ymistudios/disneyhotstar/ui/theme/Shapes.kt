@@ -18,9 +18,6 @@ class Shapes {
     val roundedCornersExtraLarge: RoundedCornerShape
         @Composable get() = RoundedCornerShape(32.sdp)
 
-    val card: RoundedCornerShape
-        @Composable get() = RoundedCornerShape(10.sdp)
-
     val circle: RoundedCornerShape
         @Composable get() = CircleShape
 

@@ -1,7 +1,8 @@
 package com.ymistudios.disneyhotstar.ui
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -15,7 +16,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.serialization.generateRouteWithArgs
 import com.ymistudios.disneyhotstar.R
 import com.ymistudios.disneyhotstar.di.module.injectNavigator
 import com.ymistudios.disneyhotstar.domain.navigator.NavigationAction
@@ -24,16 +24,14 @@ import com.ymistudios.disneyhotstar.ui.components.Scaffold
 import com.ymistudios.disneyhotstar.ui.components.Toolbar
 import com.ymistudios.disneyhotstar.ui.navigation.NavHost
 import com.ymistudios.disneyhotstar.ui.navigation.destinations.DashboardDestinations
-import com.ymistudios.disneyhotstar.ui.navigation.destinations.Destination
-import com.ymistudios.disneyhotstar.ui.navigation.navgraphs.dashboardNavGraph
+import com.ymistudios.disneyhotstar.ui.navigation.navgraphs.DashboardNavGraph
 import com.ymistudios.disneyhotstar.ui.theme.AppTheme
 import com.ymistudios.disneyhotstar.ui.toolbarmanager.Toolbar
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlin.reflect.javaType
-import kotlin.reflect.typeOf
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun App(
     appViewModel: AppViewModel = hiltViewModel(),
@@ -64,11 +62,13 @@ fun App(
                 }
             }
         ) {
-            NavHost(
-                navController = appState.navController,
-                startDestination = DashboardDestinations
-            ) {
-                dashboardNavGraph()
+            SharedTransitionLayout {
+                NavHost(
+                    navController = appState.navController,
+                    startDestination = DashboardDestinations
+                ) {
+                    DashboardNavGraph(this@SharedTransitionLayout)
+                }
             }
         }
     }
