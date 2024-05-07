@@ -107,7 +107,7 @@ private fun MovieHeader(
     Box {
         AsyncImage(
             modifier = Modifier
-                .sharedElement("image-${movieDetails.id}")
+                //.sharedElement("image-${movieDetails.id}")
                 .fillMaxWidth()
                 .aspectRatio(2 / 3f)
                 .clip(AppTheme.shapes.bottomRoundedCorners),

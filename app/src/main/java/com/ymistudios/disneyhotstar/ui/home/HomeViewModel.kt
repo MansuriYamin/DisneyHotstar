@@ -1,5 +1,6 @@
 package com.ymistudios.disneyhotstar.ui.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.ymistudios.disneyhotstar.data.repository.MovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,8 +30,9 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getMovieList() {
+        Log.d("TAG", "getMovieList: ")
         _uiState.update {
-            it.copy(movieList = movieRepository.getMovieList())
+            it.copy(movieList = movieRepository.getMovies())
         }
     }
 }

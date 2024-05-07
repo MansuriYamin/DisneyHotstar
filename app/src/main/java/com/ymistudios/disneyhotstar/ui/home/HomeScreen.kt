@@ -16,7 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -25,12 +25,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.ymistudios.disneyhotstar.R
-import com.ymistudios.disneyhotstar.data.pojo.movie.Movie
 import com.ymistudios.disneyhotstar.data.pojo.movie.MoviePoster
+import com.ymistudios.disneyhotstar.data.pojo.movie.MovieWithHeader
 import com.ymistudios.disneyhotstar.di.module.injectNavigator
 import com.ymistudios.disneyhotstar.domain.navigator.Navigator
 import com.ymistudios.disneyhotstar.ui.components.Icon
@@ -44,7 +45,6 @@ import com.ymistudios.disneyhotstar.ui.toolbarmanager.ToolbarManager
 import com.ymistudios.disneyhotstar.utils.constants.DummyUrls
 import com.ymistudios.disneyhotstar.utils.extension.horizontalSpacing
 
-
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun HomeScreen(
@@ -57,67 +57,86 @@ fun HomeScreen(
 
     val uiState by homeViewModel.uiState.collectAsStateWithLifecycle()
 
-    with(sharedTransitionScope) {
-        HomeScreenContent(
-            movieList = uiState.movieList,
-            sharedElement = {
-                sharedElement(
-                    state = sharedTransitionScope.rememberSharedContentState(key = it),
-                    animatedVisibilityScope = animatedContentScope
+//    with(sharedTransitionScope) {
+    HomeScreenContent(
+        movieList = uiState.movieList,
+        /*sharedElement = {
+            sharedElement(
+                state = sharedTransitionScope.rememberSharedContentState(key = it),
+                animatedVisibilityScope = animatedContentScope
+            )
+        },*/
+        onMoviePosterClick = {
+            navigator.navigate(
+                DashboardDestinations.MovieDetails(
+                    image = it.poster,
+                    id = it.id
                 )
-            },
-            onMoviePosterClick = {
-                navigator.navigate(
-                    DashboardDestinations.MovieDetails(
-                        image = it.poster,
-                        id = it.id
-                    )
-                )
-            }
-        )
-    }
+            )
+        }
+    )
+//    }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun HomeScreenContent(
-    movieList: List<Movie>,
+    movieList: List<MovieWithHeader>,
     sharedElement: @Composable Modifier.(String) -> Modifier = { Modifier },
     onMoviePosterClick: (moviePoster: MoviePoster) -> Unit
 ) {
+    /*val list = remember {
+        movieList.flatMap { it.moviePosterList }
+    }*/
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .background(AppTheme.colors.background),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
         contentPadding = PaddingValues(vertical = AppTheme.dimension.verticalSpacing)
     ) {
         item {
             ProfileImage()
         }
 
-        stickyHeader {
+        item {
             TopHeader()
         }
 
-        movieList.forEach { movie ->
+        itemsIndexed(movieList, key = { index, _ -> index }) { _, movie ->
+            MovieListHeader(movie)
+            /*MoviePoster(
+                moviePoster = movie,
+                sharedElement = sharedElement,
+                onClick = onMoviePosterClick
+            )*/
+
+            MovieList(
+                moviePosterList = movie.moviePosterList,
+                sharedElement = sharedElement,
+                onMoviePosterClick = onMoviePosterClick
+            )
+        }
+
+        /*movieList.forEachIndexed { index, movie ->
             item {
                 MovieListHeader(movie)
             }
 
-            item {
+            item(key = index) {
                 MovieList(
                     movie = movie,
                     sharedElement = sharedElement,
                     onMoviePosterClick = onMoviePosterClick
                 )
             }
-        }
+        }*/
     }
 }
 
 @Composable
 private fun MovieList(
-    movie: Movie,
+    moviePosterList: List<MoviePoster>,
     sharedElement: @Composable Modifier.(String) -> Modifier = { Modifier },
     onMoviePosterClick: (moviePoster: MoviePoster) -> Unit
 ) {
@@ -127,7 +146,7 @@ private fun MovieList(
             horizontal = AppTheme.dimension.horizontalSpacing
         )
     ) {
-        items(movie.moviePosterList) { moviePoster ->
+        itemsIndexed(moviePosterList, key = { index, _ -> index }) { _, moviePoster ->
             MoviePoster(
                 moviePoster = moviePoster,
                 sharedElement = sharedElement,
@@ -138,7 +157,7 @@ private fun MovieList(
 }
 
 @Composable
-private fun MovieListHeader(movie: Movie) {
+private fun MovieListHeader(movie: MovieWithHeader) {
     Text(
         modifier = Modifier
             .padding(

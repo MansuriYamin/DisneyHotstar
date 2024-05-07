@@ -1,8 +1,9 @@
 package com.ymistudios.disneyhotstar.data.repository
 
-import com.ymistudios.disneyhotstar.data.pojo.movie.Movie
+import com.ymistudios.disneyhotstar.data.pojo.movie.MovieWithHeader
 
 interface MovieRepository {
 
-    fun getMovieList(): List<Movie>
+    fun getMovies(): List<MovieWithHeader>
+    fun getMovieList(): List<MovieWithHeader>
 }
