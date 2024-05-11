@@ -1,6 +1,8 @@
 package com.ymistudios.disneyhotstar.data.datasource
 
 import com.ymistudios.disneyhotstar.data.database.MovieDatabase
+import com.ymistudios.disneyhotstar.data.pojo.movie.Header
+import com.ymistudios.disneyhotstar.data.pojo.movie.Movie
 import com.ymistudios.disneyhotstar.data.pojo.movie.MoviePoster
 import com.ymistudios.disneyhotstar.data.pojo.movie.MovieWithHeader
 import com.ymistudios.disneyhotstar.data.repository.MovieRepository
@@ -11,21 +13,39 @@ import javax.inject.Singleton
 class MovieDataSource @Inject constructor() : MovieRepository {
 
     override fun getMovies(): List<MovieWithHeader> {
-        return MovieDatabase.headers.mapIndexed { indexOut, it ->
+        return MovieDatabase.headers.map { header ->
             MovieWithHeader(
-                header = it,
-                moviePosterList = MovieDatabase.movieList.mapIndexed { indexIn, moviePoster ->
-                    MoviePoster(
-                        id = "$indexOut$indexIn".toInt(),
-                        poster = moviePoster.posterUrl
-                    )
+                header = header,
+                moviePosterList = when (header.type) {
+                    Header.Type.FOR_YOU -> getRandomMovies()
+                    Header.Type.CONTINUE_WATCHING -> getRandomMovies()
+                    Header.Type.POPULAR -> getPopularMovies()
+                    Header.Type.FOR_KIDS -> getRandomMovies()
+                    Header.Type.TRENDING -> getTrendingMovies()
                 }
             )
         }
     }
 
+    private fun getRandomMovies() =
+        MovieDatabase.movieList.shuffled().toMoviePoster()
+
+    private fun getPopularMovies() =
+        MovieDatabase.movieList.filter { it.imdbRating > 7.0 }.toMoviePoster()
+
+    private fun getTrendingMovies() =
+        MovieDatabase.movieList.filter { it.imdbRating > 7.0 && it.year == 2024 }.toMoviePoster()
+
+    private fun List<Movie>.toMoviePoster() = map { movie ->
+        MoviePoster(
+            id = movie.id,
+            poster = movie.posterUrl
+        )
+    }.take(10)
+
     override fun getMovieList(): List<MovieWithHeader> {
-        return listOf(
+        return emptyList()
+        /*return listOf(
             MovieWithHeader(
                 header = "For you",
                 moviePosterList = listOf(
@@ -131,6 +151,6 @@ class MovieDataSource @Inject constructor() : MovieRepository {
                     )
                 )
             )
-        )
+        )*/
     }
 }

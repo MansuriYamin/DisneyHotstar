@@ -1,59 +1,16 @@
 package com.ymistudios.disneyhotstar.data.database
 
+import com.ymistudios.disneyhotstar.data.pojo.movie.Header
 import com.ymistudios.disneyhotstar.data.pojo.movie.Movie
 import com.ymistudios.disneyhotstar.data.pojo.movie.Trailer
 
 object MovieDatabase {
 
     val headers = listOf(
-        "For You",
-        "Popular",
-        "Continue Watching",
-        "Trending",
-        "For You",
-        "Popular",
-        "Continue Watching",
-        "Trending",
-        "For You",
-        "Popular",
-        "Continue Watching",
-        "Trending",
-        "For You",
-        "Popular",
-        "Continue Watching",
-        "Trending",
-        "For You",
-        "Popular",
-        "Continue Watching",
-        "Trending",
-        "For You",
-        "Popular",
-        "Continue Watching",
-        "Trending",
-        "For You",
-        "Popular",
-        "Continue Watching",
-        "Trending",
-        "For You",
-        "Popular",
-        "Continue Watching",
-        "Trending",
-        "For You",
-        "Popular",
-        "Continue Watching",
-        "Trending",
-        "For You",
-        "Popular",
-        "Continue Watching",
-        "Trending",
-        "For You",
-        "Popular",
-        "Continue Watching",
-        "Trending",
-        "For You",
-        "Popular",
-        "Continue Watching",
-        "Trending",
+        Header(header = "For You", type = Header.Type.FOR_YOU),
+        Header(header = "Popular", type = Header.Type.POPULAR),
+        Header(header = "Continue Watching", type = Header.Type.CONTINUE_WATCHING),
+        Header(header = "Trending", type = Header.Type.TRENDING),
     )
 
     val movieList = listOf(
@@ -65,7 +22,7 @@ object MovieDatabase {
             genre = listOf("Animation", "Adventure", "Comedy"),
             durationMinutes = 108,
             imdbRating = 8.0,
-            posterUrl = "https://i.pinimg.com/564x/c0/89/7a/c0897a72abc0221eb67a99d744eaecf5.jpg",
+            posterUrl = "https://i.pinimg.com/736x/c0/89/7a/c0897a72abc0221eb67a99d744eaecf5.jpg",
             trailer = listOf(Trailer(1, "https://example.com/zootopia_trailer.mp4", 120)),
             parentalRating = "PG"
         ),
@@ -77,7 +34,7 @@ object MovieDatabase {
             genre = listOf("Animation", "Adventure", "Comedy"),
             durationMinutes = 117,
             imdbRating = 7.1,
-            posterUrl = "https://i.pinimg.com/564x/c0/89/7a/c0897a72abc0221eb67a99d744eaecf5.jpg",
+            posterUrl = "https://i.pinimg.com/736x/c6/ac/ed/c6aced5d39018cc4ce37ed055629afbf.jpg",
             trailer = listOf(Trailer(2, "https://example.com/cars_trailer.mp4", 110)),
             parentalRating = "G"
         ),
@@ -89,7 +46,7 @@ object MovieDatabase {
             genre = listOf("Animation", "Adventure", "Comedy"),
             durationMinutes = 81,
             imdbRating = 8.3,
-            posterUrl = "https://i.pinimg.com/564x/c0/89/7a/c0897a72abc0221eb67a99d744eaecf5.jpg",
+            posterUrl = "https://i.pinimg.com/736x/aa/39/57/aa39574b40081259b8b674dcc78c86d3.jpg",
             trailer = listOf(Trailer(3, "https://example.com/toy_story_trailer.mp4", 95)),
             parentalRating = "G"
         ),
@@ -101,7 +58,7 @@ object MovieDatabase {
             genre = listOf("Animation", "Adventure", "Comedy"),
             durationMinutes = 100,
             imdbRating = 8.1,
-            posterUrl = "https://i.pinimg.com/564x/c0/89/7a/c0897a72abc0221eb67a99d744eaecf5.jpg",
+            posterUrl = "https://i.pinimg.com/736x/93/6d/de/936dde7cea710e5a3c8ab01e21c7a846.jpg",
             trailer = listOf(Trailer(4, "https://example.com/finding_nemo_trailer.mp4", 120)),
             parentalRating = "G"
         ),
@@ -113,7 +70,7 @@ object MovieDatabase {
             genre = listOf("Animation", "Adventure", "Drama"),
             durationMinutes = 89,
             imdbRating = 8.5,
-            posterUrl = "https://i.pinimg.com/564x/c0/89/7a/c0897a72abc0221eb67a99d744eaecf5.jpg",
+            posterUrl = "https://i.pinimg.com/736x/d3/4a/e0/d34ae00081e8a203e1acfd360f0ae7f4.jpg",
             trailer = listOf(Trailer(5, "https://example.com/lion_king_trailer.mp4", 90)),
             parentalRating = "G"
         ),
@@ -125,7 +82,7 @@ object MovieDatabase {
             genre = listOf("Animation", "Adventure", "Comedy"),
             durationMinutes = 107,
             imdbRating = 7.6,
-            posterUrl = "https://i.pinimg.com/564x/c0/89/7a/c0897a72abc0221eb67a99d744eaecf5.jpg",
+            posterUrl = "https://i.pinimg.com/736x/bf/0f/53/bf0f539e1d82d62725911e2b75056f46.jpg",
             trailer = listOf(Trailer(6, "https://example.com/moana_trailer.mp4", 110)),
             parentalRating = "PG"
         ),
@@ -137,7 +94,7 @@ object MovieDatabase {
             genre = listOf("Animation", "Adventure", "Comedy"),
             durationMinutes = 102,
             imdbRating = 7.4,
-            posterUrl = "https://i.pinimg.com/564x/c0/89/7a/c0897a72abc0221eb67a99d744eaecf5.jpg",
+            posterUrl = "https://i.pinimg.com/736x/fe/e6/a6/fee6a6f69e83c4eb9dfce93929c8ad2c.jpg",
             trailer = listOf(Trailer(7, "https://example.com/frozen_trailer.mp4", 120)),
             parentalRating = "PG"
         ),
@@ -149,7 +106,7 @@ object MovieDatabase {
             genre = listOf("Animation", "Family", "Fantasy"),
             durationMinutes = 84,
             imdbRating = 8.0,
-            posterUrl = "https://i.pinimg.com/564x/c0/89/7a/c0897a72abc0221eb67a99d744eaecf5.jpg",
+            posterUrl = "https://i.pinimg.com/736x/ae/1d/19/ae1d19b2368a16420ac1b864f4e9d6cd.jpg",
             trailer = listOf(
                 Trailer(
                     8,
@@ -167,7 +124,7 @@ object MovieDatabase {
             genre = listOf("Animation", "Adventure", "Comedy"),
             durationMinutes = 90,
             imdbRating = 8.0,
-            posterUrl = "https://i.pinimg.com/564x/c0/89/7a/c0897a72abc0221eb67a99d744eaecf5.jpg",
+            posterUrl = "https://i.pinimg.com/736x/a5/08/6b/a5086bb6940abc2d6301e7b1acc1aa6e.jpg",
             trailer = listOf(Trailer(9, "https://example.com/aladdin_trailer.mp4", 105)),
             parentalRating = "G"
         ),
@@ -179,7 +136,7 @@ object MovieDatabase {
             genre = listOf("Animation", "Family", "Fantasy"),
             durationMinutes = 83,
             imdbRating = 7.6,
-            posterUrl = "https://i.pinimg.com/564x/c0/89/7a/c0897a72abc0221eb67a99d744eaecf5.jpg",
+            posterUrl = "https://i.pinimg.com/736x/23/75/4b/23754b0b1fc5d35c1ee3159ae7cf6acc.jpg",
             trailer = listOf(Trailer(10, "https://example.com/little_mermaid_trailer.mp4", 95)),
             parentalRating = "G"
         )

@@ -57,25 +57,26 @@ fun HomeScreen(
 
     val uiState by homeViewModel.uiState.collectAsStateWithLifecycle()
 
-//    with(sharedTransitionScope) {
-    HomeScreenContent(
-        movieList = uiState.movieList,
-        /*sharedElement = {
-            sharedElement(
-                state = sharedTransitionScope.rememberSharedContentState(key = it),
-                animatedVisibilityScope = animatedContentScope
-            )
-        },*/
-        onMoviePosterClick = {
-            navigator.navigate(
-                DashboardDestinations.MovieDetails(
-                    image = it.poster,
-                    id = it.id
+    with(sharedTransitionScope) {
+        HomeScreenContent(
+            movieList = uiState.movieList,
+            sharedElement = { sharedElementKey ->
+                sharedElement(
+                    state = sharedTransitionScope.rememberSharedContentState(key = sharedElementKey),
+                    animatedVisibilityScope = animatedContentScope
                 )
-            )
-        }
-    )
-//    }
+            },
+            onMoviePosterClick = { it, key ->
+                navigator.navigate(
+                    DashboardDestinations.MovieDetails(
+                        image = it.poster,
+                        id = it.id,
+                        sharedElementKey = key
+                    )
+                )
+            }
+        )
+    }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -83,7 +84,7 @@ fun HomeScreen(
 private fun HomeScreenContent(
     movieList: List<MovieWithHeader>,
     sharedElement: @Composable Modifier.(String) -> Modifier = { Modifier },
-    onMoviePosterClick: (moviePoster: MoviePoster) -> Unit
+    onMoviePosterClick: (moviePoster: MoviePoster, sharedElementKey: String) -> Unit
 ) {
     /*val list = remember {
         movieList.flatMap { it.moviePosterList }
@@ -99,11 +100,11 @@ private fun HomeScreenContent(
             ProfileImage()
         }
 
-        item {
+        stickyHeader {
             TopHeader()
         }
 
-        itemsIndexed(movieList, key = { index, _ -> index }) { _, movie ->
+        itemsIndexed(items = movieList, key = { index, _ -> index }) { index, movie ->
             MovieListHeader(movie)
             /*MoviePoster(
                 moviePoster = movie,
@@ -112,6 +113,7 @@ private fun HomeScreenContent(
             )*/
 
             MovieList(
+                outerIndex = index,
                 moviePosterList = movie.moviePosterList,
                 sharedElement = sharedElement,
                 onMoviePosterClick = onMoviePosterClick
@@ -137,8 +139,9 @@ private fun HomeScreenContent(
 @Composable
 private fun MovieList(
     moviePosterList: List<MoviePoster>,
-    sharedElement: @Composable Modifier.(String) -> Modifier = { Modifier },
-    onMoviePosterClick: (moviePoster: MoviePoster) -> Unit
+    sharedElement: @Composable (Modifier.(String) -> Modifier) = { Modifier },
+    onMoviePosterClick: (moviePoster: MoviePoster, sharedElementKey: String) -> Unit,
+    outerIndex: Int
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(AppTheme.dimension.default),
@@ -146,11 +149,14 @@ private fun MovieList(
             horizontal = AppTheme.dimension.horizontalSpacing
         )
     ) {
-        itemsIndexed(moviePosterList, key = { index, _ -> index }) { _, moviePoster ->
+        itemsIndexed(
+            moviePosterList,
+            key = { index, _ -> "$outerIndex$index" }) { index, moviePoster ->
             MoviePoster(
+                modifier = Modifier.sharedElement("image-$outerIndex$index"),
                 moviePoster = moviePoster,
                 sharedElement = sharedElement,
-                onClick = onMoviePosterClick
+                onClick = { onMoviePosterClick(moviePoster, "image-$outerIndex$index") }
             )
         }
     }
@@ -165,7 +171,7 @@ private fun MovieListHeader(movie: MovieWithHeader) {
                 bottom = AppTheme.dimension.default
             )
             .horizontalSpacing(),
-        text = movie.header,
+        text = movie.header.header,
         style = AppTheme.typography.subTitle
     )
 }
@@ -233,5 +239,5 @@ private fun TopHeader() {
 @Preview(showBackground = true)
 @Composable
 private fun HomeScreenContentPrev() {
-    HomeScreenContent(movieList = emptyList(), onMoviePosterClick = {})
+    HomeScreenContent(movieList = emptyList(), onMoviePosterClick = { _, _ -> })
 }

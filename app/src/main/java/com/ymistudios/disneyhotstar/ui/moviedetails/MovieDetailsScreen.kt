@@ -64,7 +64,7 @@ fun MovieDetailsScreen(
             movieDetails = movieDetails,
             sharedElement = {
                 sharedElement(
-                    state = sharedTransitionScope.rememberSharedContentState(key = it),
+                    state = sharedTransitionScope.rememberSharedContentState(key = movieDetails.sharedElementKey),
                     animatedVisibilityScope = animatedContentScope
                 )
             },
@@ -107,7 +107,7 @@ private fun MovieHeader(
     Box {
         AsyncImage(
             modifier = Modifier
-                //.sharedElement("image-${movieDetails.id}")
+                .sharedElement("image-${movieDetails.id}")
                 .fillMaxWidth()
                 .aspectRatio(2 / 3f)
                 .clip(AppTheme.shapes.bottomRoundedCorners),
@@ -408,7 +408,7 @@ private fun SimilarMovies() {
 @Composable
 private fun MovieDetailsScreenPrev() {
     MovieDetailsScreenContent(
-        movieDetails = DashboardDestinations.MovieDetails("", 0),
+        movieDetails = DashboardDestinations.MovieDetails("", 0, ""),
         onClose = {}
     )
 }

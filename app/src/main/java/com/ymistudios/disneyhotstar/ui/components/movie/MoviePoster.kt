@@ -1,14 +1,11 @@
 package com.ymistudios.disneyhotstar.ui.components.movie
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -18,11 +15,11 @@ import coil.compose.AsyncImage
 import com.ymistudios.disneyhotstar.R
 import com.ymistudios.disneyhotstar.data.pojo.movie.MoviePoster
 import com.ymistudios.disneyhotstar.ui.theme.AppTheme
-import com.ymistudios.disneyhotstar.utils.sdp
 
 @Composable
 fun MoviePoster(
     moviePoster: MoviePoster,
+    modifier: Modifier = Modifier,
     width: Dp = AppTheme.dimension.moviePosterWidth,
     sharedElement: @Composable Modifier.(String) -> Modifier = { Modifier },
     onClick: (moviePoster: MoviePoster) -> Unit
@@ -35,8 +32,8 @@ fun MoviePoster(
         .background(Color.Red)
         .clickable { onClick(moviePoster) })*/
     AsyncImage(
-        modifier = Modifier
-            //.sharedElement("image-${moviePoster.id}")
+        modifier = modifier
+            // .sharedElement("image-${moviePoster.id}")
             .width(width)
             .aspectRatio(2 / 3f)
             .clip(AppTheme.shapes.roundedCorners)

@@ -4,6 +4,6 @@ import androidx.compose.runtime.Immutable
 
 @Immutable
 data class MovieWithHeader(
-    val header: String,
+    val header: Header,
     val moviePosterList: List<MoviePoster>
 )
