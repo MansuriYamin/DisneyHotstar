@@ -11,8 +11,4 @@ class AppViewModel @Inject constructor(
 ) : ViewModel() {
 
     val navigationActionFlow = navigator.navigationActionFlow
-
-    fun navigateBack() {
-        navigator.navigateBack()
-    }
 }

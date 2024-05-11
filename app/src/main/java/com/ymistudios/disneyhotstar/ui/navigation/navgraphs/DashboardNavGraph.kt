@@ -10,7 +10,7 @@ import com.ymistudios.disneyhotstar.ui.navigation.destinations.DashboardDestinat
 import com.ymistudios.disneyhotstar.ui.navigation.navigation
 
 @OptIn(ExperimentalSharedTransitionApi::class)
-fun NavGraphBuilder.DashboardNavGraph(sharedTransitionScope: SharedTransitionScope) {
+fun NavGraphBuilder.dashboardNavGraph(sharedTransitionScope: SharedTransitionScope) {
         navigation<DashboardDestinations>(
             startDestination = DashboardDestinations.Home
         ) {

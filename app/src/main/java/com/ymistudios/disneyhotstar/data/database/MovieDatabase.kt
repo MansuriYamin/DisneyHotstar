@@ -8,9 +8,10 @@ object MovieDatabase {
 
     val headers = listOf(
         Header(header = "For You", type = Header.Type.FOR_YOU),
-        Header(header = "Popular", type = Header.Type.POPULAR),
         Header(header = "Continue Watching", type = Header.Type.CONTINUE_WATCHING),
         Header(header = "Trending", type = Header.Type.TRENDING),
+        Header(header = "Latest Releases", type = Header.Type.LATEST_RELEASES),
+        Header(header = "Popular", type = Header.Type.POPULAR)
     )
 
     val movieList = listOf(
@@ -34,7 +35,7 @@ object MovieDatabase {
             genre = listOf("Family", "Sport"),
             duration = "1h 42min",
             imdbRating = 6.7,
-            poster = "https://i.pinimg.com/564x/06/e2/f4/06e2f4dbd0408c4628de070599041792.jpg",
+            poster = "https://i.pinimg.com/736x/06/e2/f4/06e2f4dbd0408c4628de070599041792.jpg",
             trailer = listOf(Trailer(2, "https://example.com/cars_trailer.mp4", 110)),
             parentalRating = "G"
         ),
@@ -352,7 +353,7 @@ object MovieDatabase {
             genre = listOf("Action", "Adventure"),
             duration = "2h 13min",
             imdbRating = 8.2,
-            poster = "https://i.pinimg.com/736x/e5/83/b4/e583b43e320271408499d7af729a81b4.jpg",
+            poster = "https://i.pinimg.com/736x/a5/b6/bb/a5b6bb42dad3dad9f1f9a0fedcf2a688.jpg",
             trailer = listOf(Trailer(10, "https://example.com/little_mermaid_trailer.mp4", 95)),
             parentalRating = "PG-13"
         )

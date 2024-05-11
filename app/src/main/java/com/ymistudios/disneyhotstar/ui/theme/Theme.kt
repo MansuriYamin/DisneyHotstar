@@ -41,7 +41,7 @@ fun ProvideAppTheme(
     val rippleIndication = rememberRipple()
 
     CompositionLocalProvider(
-        LocalPicVerseColors provides colorPalette,
+        LocalColors provides colorPalette,
         LocalIndication provides rippleIndication,
         LocalTypography provides AppTheme.typography
     ) {
@@ -57,7 +57,7 @@ fun ProvideAppTheme(
 object AppTheme {
     val colors: Colors
         @Composable
-        get() = LocalPicVerseColors.current
+        get() = LocalColors.current
 
     val typography: Typography
         @Composable

@@ -93,7 +93,7 @@ class Colors(
     )
 }
 
-/* ------------- Light Color Schemes ------------- */
+/* ------------- Dark Color Schemes ------------- */
 fun darkColorScheme() = Colors(
     primary = White,
     onPrimary = Black,
@@ -112,6 +112,6 @@ fun darkColorScheme() = Colors(
     isDark = false
 )
 
-val LocalPicVerseColors = staticCompositionLocalOf {
+val LocalColors = staticCompositionLocalOf {
     darkColorScheme()
 }

@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -21,25 +20,15 @@ fun MoviePoster(
     moviePoster: MoviePoster,
     modifier: Modifier = Modifier,
     width: Dp = AppTheme.dimension.moviePosterWidth,
-    sharedElement: @Composable Modifier.(String) -> Modifier = { Modifier },
     onClick: (moviePoster: MoviePoster) -> Unit
 ) {
-    /*Box(modifier = Modifier
-        //.sharedElement("image-${moviePoster.id}")
-        .width(width)
-        .aspectRatio(2 / 3f)
-        .clip(AppTheme.shapes.roundedCorners)
-        .background(Color.Red)
-        .clickable { onClick(moviePoster) })*/
     AsyncImage(
         modifier = modifier
-            // .sharedElement("image-${moviePoster.id}")
             .width(width)
             .aspectRatio(2 / 3f)
             .clip(AppTheme.shapes.roundedCorners)
             .clickable { onClick(moviePoster) },
         model = moviePoster.poster,
-        placeholder = painterResource(id = R.drawable.ic_launcher_background),
         contentScale = ContentScale.Crop,
         contentDescription = stringResource(R.string.content_description_movie_poster)
     )

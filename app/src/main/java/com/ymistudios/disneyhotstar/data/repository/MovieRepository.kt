@@ -8,6 +8,4 @@ interface MovieRepository {
     fun getMovies(): List<MovieWithHeader>
 
     fun getMovieDetails(id: Int): Movie?
-
-    fun getMovieList(): List<MovieWithHeader>
 }

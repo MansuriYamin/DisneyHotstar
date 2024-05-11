@@ -24,7 +24,7 @@ import com.ymistudios.disneyhotstar.ui.components.Scaffold
 import com.ymistudios.disneyhotstar.ui.components.Toolbar
 import com.ymistudios.disneyhotstar.ui.navigation.NavHost
 import com.ymistudios.disneyhotstar.ui.navigation.destinations.DashboardDestinations
-import com.ymistudios.disneyhotstar.ui.navigation.navgraphs.DashboardNavGraph
+import com.ymistudios.disneyhotstar.ui.navigation.navgraphs.dashboardNavGraph
 import com.ymistudios.disneyhotstar.ui.theme.AppTheme
 import com.ymistudios.disneyhotstar.ui.toolbarmanager.Toolbar
 import kotlinx.coroutines.flow.Flow
@@ -67,7 +67,7 @@ fun App(
                     navController = appState.navController,
                     startDestination = DashboardDestinations
                 ) {
-                    DashboardNavGraph(this@SharedTransitionLayout)
+                    dashboardNavGraph(this@SharedTransitionLayout)
                 }
             }
         }

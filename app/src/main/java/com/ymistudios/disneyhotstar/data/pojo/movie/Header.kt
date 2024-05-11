@@ -9,6 +9,7 @@ data class Header(
         CONTINUE_WATCHING,
         POPULAR,
         FOR_KIDS,
-        TRENDING
+        TRENDING,
+        LATEST_RELEASES
     }
 }

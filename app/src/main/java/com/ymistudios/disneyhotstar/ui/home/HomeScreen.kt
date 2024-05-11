@@ -86,9 +86,6 @@ private fun HomeScreenContent(
     sharedElement: @Composable Modifier.(String) -> Modifier = { Modifier },
     onMoviePosterClick: (moviePoster: MoviePoster, sharedElementKey: String) -> Unit
 ) {
-    /*val list = remember {
-        movieList.flatMap { it.moviePosterList }
-    }*/
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -106,11 +103,6 @@ private fun HomeScreenContent(
 
         itemsIndexed(items = movieList, key = { index, _ -> index }) { index, movie ->
             MovieListHeader(movie)
-            /*MoviePoster(
-                moviePoster = movie,
-                sharedElement = sharedElement,
-                onClick = onMoviePosterClick
-            )*/
 
             MovieList(
                 outerIndex = index,
@@ -119,20 +111,6 @@ private fun HomeScreenContent(
                 onMoviePosterClick = onMoviePosterClick
             )
         }
-
-        /*movieList.forEachIndexed { index, movie ->
-            item {
-                MovieListHeader(movie)
-            }
-
-            item(key = index) {
-                MovieList(
-                    movie = movie,
-                    sharedElement = sharedElement,
-                    onMoviePosterClick = onMoviePosterClick
-                )
-            }
-        }*/
     }
 }
 
@@ -153,9 +131,8 @@ private fun MovieList(
             moviePosterList,
             key = { index, _ -> "$outerIndex$index" }) { index, moviePoster ->
             MoviePoster(
-                modifier = Modifier.sharedElement("image-$outerIndex$index"),
                 moviePoster = moviePoster,
-                sharedElement = sharedElement,
+                modifier = Modifier.sharedElement("image-$outerIndex$index"),
                 onClick = { onMoviePosterClick(moviePoster, "image-$outerIndex$index") }
             )
         }

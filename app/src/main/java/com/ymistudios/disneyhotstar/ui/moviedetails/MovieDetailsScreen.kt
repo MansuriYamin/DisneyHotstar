@@ -135,7 +135,6 @@ private fun MovieHeader(
                 .aspectRatio(2 / 3f)
                 .clip(AppTheme.shapes.bottomRoundedCorners),
             model = poster,
-            placeholder = painterResource(id = R.drawable.ic_launcher_background),
             contentScale = ContentScale.Crop,
             contentDescription = stringResource(id = R.string.content_description_movie_poster),
         )
