@@ -24,6 +24,8 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,8 +38,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.ymistudios.disneyhotstar.R
+import com.ymistudios.disneyhotstar.data.pojo.movie.Movie
 import com.ymistudios.disneyhotstar.di.module.injectNavigator
 import com.ymistudios.disneyhotstar.domain.navigator.Navigator
 import com.ymistudios.disneyhotstar.ui.components.Icon
@@ -55,13 +60,20 @@ import com.ymistudios.disneyhotstar.utils.extension.horizontalSpacing
 @Composable
 fun MovieDetailsScreen(
     navigator: Navigator = injectNavigator(),
+    movieDetailsViewModel: MovieDetailsViewModel = hiltViewModel(),
     movieDetails: DashboardDestinations.MovieDetails,
     sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope
 ) {
+    LaunchedEffect(key1 = Unit) {
+        movieDetailsViewModel.onEvent(MovieDetailsEvent.GetMovieDetails(movieDetails.id))
+    }
+
+    val uiState by movieDetailsViewModel.uiState.collectAsStateWithLifecycle()
+
     with(sharedTransitionScope) {
         MovieDetailsScreenContent(
-            movieDetails = movieDetails,
+            movie = uiState.movie,
             sharedElement = {
                 sharedElement(
                     state = sharedTransitionScope.rememberSharedContentState(key = movieDetails.sharedElementKey),
@@ -75,43 +87,54 @@ fun MovieDetailsScreen(
 
 @Composable
 private fun MovieDetailsScreenContent(
-    movieDetails: DashboardDestinations.MovieDetails,
-    sharedElement: @Composable Modifier.(String) -> Modifier = { Modifier },
+    movie: Movie?,
+    sharedElement: @Composable Modifier.() -> Modifier = { Modifier },
     onClose: () -> Unit
 ) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(AppTheme.colors.background),
-        contentPadding = PaddingValues(bottom = AppTheme.dimension.medium)
-    ) {
-        item {
-            MovieHeader(
-                movieDetails = movieDetails,
-                sharedElement = sharedElement,
-                onClose = onClose
-            )
-            MovieBasicInfo()
-            MovieDescription()
-            SimilarMovies()
+    movie?.let {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(AppTheme.colors.background),
+            contentPadding = PaddingValues(bottom = AppTheme.dimension.medium)
+        ) {
+            item {
+                MovieHeader(
+                    poster = movie.poster,
+                    sharedElement = sharedElement,
+                    onClose = onClose
+                )
+                MovieBasicInfo(
+                    year = movie.year,
+                    duration = movie.duration,
+                    parentalRating = movie.parentalRating
+                )
+                MovieNameAndDescription(
+                    name = movie.title,
+                    imdbRating = movie.imdbRating,
+                    description = movie.description,
+                    genre = movie.genre
+                )
+                SimilarMovies()
+            }
         }
     }
 }
 
 @Composable
 private fun MovieHeader(
-    movieDetails: DashboardDestinations.MovieDetails,
-    sharedElement: @Composable Modifier.(String) -> Modifier = { Modifier },
+    poster: String,
+    sharedElement: @Composable Modifier.() -> Modifier = { Modifier },
     onClose: () -> Unit
 ) {
     Box {
         AsyncImage(
             modifier = Modifier
-                .sharedElement("image-${movieDetails.id}")
+                .sharedElement()
                 .fillMaxWidth()
                 .aspectRatio(2 / 3f)
                 .clip(AppTheme.shapes.bottomRoundedCorners),
-            model = movieDetails.image,
+            model = poster,
             placeholder = painterResource(id = R.drawable.ic_launcher_background),
             contentScale = ContentScale.Crop,
             contentDescription = stringResource(id = R.string.content_description_movie_poster),
@@ -175,7 +198,11 @@ private fun MovieHeader(
 }
 
 @Composable
-private fun MovieBasicInfo() {
+private fun MovieBasicInfo(
+    year: Int,
+    duration: String,
+    parentalRating: String
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -183,7 +210,11 @@ private fun MovieBasicInfo() {
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(text = "2000", color = White.copy(alpha = 0.4f), style = AppTheme.typography.subTitle)
+        Text(
+            text = year.toString(),
+            color = White.copy(alpha = 0.4f),
+            style = AppTheme.typography.subTitle
+        )
         Box(
             modifier = Modifier
                 .padding(start = AppTheme.dimension.default)
@@ -193,7 +224,7 @@ private fun MovieBasicInfo() {
         )
         Text(
             modifier = Modifier.padding(start = AppTheme.dimension.default),
-            text = "1h 28 min",
+            text = duration,
             color = White.copy(alpha = 0.4f),
             style = AppTheme.typography.subTitle
         )
@@ -205,7 +236,7 @@ private fun MovieBasicInfo() {
         )
         Text(
             modifier = Modifier.padding(start = AppTheme.dimension.default),
-            text = "PJ-12",
+            text = parentalRating,
             color = White.copy(alpha = 0.4f),
             style = AppTheme.typography.subTitle
         )
@@ -237,7 +268,12 @@ private fun MovieBasicInfo() {
 }
 
 @Composable
-private fun MovieDescription() {
+private fun MovieNameAndDescription(
+    name: String,
+    imdbRating: Double,
+    description: String,
+    genre: List<String>
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -259,7 +295,7 @@ private fun MovieDescription() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Zootopia",
+                    text = name,
                     style = AppTheme.typography.title,
                     color = White
                 )
@@ -281,13 +317,13 @@ private fun MovieDescription() {
                 }
                 Text(
                     modifier = Modifier.padding(start = AppTheme.dimension.small),
-                    text = "4.7"
+                    text = imdbRating.toString()
                 )
             }
 
             Text(
                 modifier = Modifier.padding(top = AppTheme.dimension.medium),
-                text = "When Judy Hopps, a rookie officer in the Zootopia Police Department, sniffs out a sinister plot, she enlists the help of a con artist to solve the case in order to prove her abilities to Chief Bogo.",
+                text = description,
                 textAlign = TextAlign.Center,
                 style = AppTheme.typography.subTitle,
                 color = White
@@ -295,7 +331,7 @@ private fun MovieDescription() {
 
             Text(
                 modifier = Modifier.padding(top = AppTheme.dimension.medium),
-                text = "Animation, Mystery, Comedy",
+                text = genre.joinToString(),
                 textAlign = TextAlign.Center,
                 style = AppTheme.typography.subTitle,
                 color = White.copy(alpha = 0.4f)
@@ -408,7 +444,7 @@ private fun SimilarMovies() {
 @Composable
 private fun MovieDetailsScreenPrev() {
     MovieDetailsScreenContent(
-        movieDetails = DashboardDestinations.MovieDetails("", 0, ""),
+        movie = null,
         onClose = {}
     )
 }
