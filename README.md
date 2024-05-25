@@ -8,12 +8,10 @@ by [Disney But Better](https://www.behance.net/gallery/141700011/Disney-But-Bett
 is built using Jetpack Compose, the modern UI toolkit for building native Android apps.
 
 ## Screenshots
-
-[//]: # (![Screenshot 1]&#40;previews/Home_1.png&#41;)
-<img src="previews/Home_1.png" width="50%" alt="Home"/>
-![Screenshot 2](previews/Home_2.png)
-![Screenshot 3](previews/Details_1.png)
-![Screenshot 4](previews/Details_2.png)
+<img src="previews/Home_1.png" width="100" alt="Home"/>
+<img src="previews/Home_2.png" width="100" alt="Home"/>
+<img src="previews/Details_1.png" width="100" alt="Details"/>
+<img src="previews/Details_2.png" width="100" alt="Details"/>
 
 ## Installation
 
