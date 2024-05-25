@@ -104,18 +104,29 @@ private fun MovieDetailsScreenContent(
                     sharedElement = sharedElement,
                     onClose = onClose
                 )
+
                 MovieBasicInfo(
+                    modifier = Modifier.padding(top = AppTheme.dimension.medium),
                     year = movie.year,
                     duration = movie.duration,
                     parentalRating = movie.parentalRating
                 )
+
                 MovieNameAndDescription(
+                    modifier = Modifier
+                        .padding(top = AppTheme.dimension.medium)
+                        .horizontalSpacing(),
                     name = movie.title,
                     imdbRating = movie.imdbRating,
                     description = movie.description,
                     genre = movie.genre
                 )
-                SimilarMovies()
+
+                SimilarMovies(
+                    modifier = Modifier
+                        .padding(top = AppTheme.dimension.small)
+                        .horizontalSpacing()
+                )
             }
         }
     }
@@ -198,14 +209,13 @@ private fun MovieHeader(
 
 @Composable
 private fun MovieBasicInfo(
+    modifier: Modifier = Modifier,
     year: Int,
     duration: String,
     parentalRating: String
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = AppTheme.dimension.medium),
+        modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -268,35 +278,34 @@ private fun MovieBasicInfo(
 
 @Composable
 private fun MovieNameAndDescription(
+    modifier: Modifier = Modifier,
     name: String,
     imdbRating: Double,
     description: String,
     genre: List<String>
 ) {
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = AppTheme.dimension.medium)
-            .horizontalSpacing(),
+        modifier = modifier.fillMaxWidth(),
         shape = AppTheme.shapes.roundedCornersExtraLarge,
         colors = CardDefaults.cardColors(containerColor = AppTheme.colors.card)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(
-                    vertical = AppTheme.dimension.extraLarge,
-                    horizontal = AppTheme.dimension.medium
-                ),
+                .padding(vertical = AppTheme.dimension.extraLarge),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier.padding(horizontal = AppTheme.dimension.medium),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
+                    modifier = Modifier.weight(weight = 1f, fill = false),
                     text = name,
                     style = AppTheme.typography.title,
-                    color = White
+                    color = White,
+                    textAlign = TextAlign.Center
                 )
                 Box(
                     modifier = Modifier
@@ -321,7 +330,9 @@ private fun MovieNameAndDescription(
             }
 
             Text(
-                modifier = Modifier.padding(top = AppTheme.dimension.medium),
+                modifier = Modifier
+                    .padding(top = AppTheme.dimension.medium)
+                    .padding(horizontal = AppTheme.dimension.medium),
                 text = description,
                 textAlign = TextAlign.Center,
                 style = AppTheme.typography.subTitle,
@@ -329,21 +340,16 @@ private fun MovieNameAndDescription(
             )
 
             Text(
-                modifier = Modifier.padding(top = AppTheme.dimension.medium),
+                modifier = Modifier
+                    .padding(top = AppTheme.dimension.medium)
+                    .padding(horizontal = AppTheme.dimension.medium),
                 text = genre.joinToString(),
                 textAlign = TextAlign.Center,
                 style = AppTheme.typography.subTitle,
                 color = White.copy(alpha = 0.4f)
             )
 
-            LazyRow(
-                modifier = Modifier.padding(top = AppTheme.dimension.large),
-                horizontalArrangement = Arrangement.spacedBy(AppTheme.dimension.medium)
-            ) {
-                items(5) {
-                    Trailer()
-                }
-            }
+            TrailerList(modifier = Modifier.padding(top = AppTheme.dimension.large))
         }
     }
 }
@@ -394,13 +400,23 @@ private fun Trailer() {
 }
 
 @Composable
+private fun TrailerList(modifier: Modifier = Modifier) {
+    LazyRow(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(AppTheme.dimension.medium),
+        contentPadding = PaddingValues(horizontal = AppTheme.dimension.medium)
+    ) {
+        items(5) {
+            Trailer()
+        }
+    }
+}
+
+@Composable
 @OptIn(ExperimentalLayoutApi::class)
-private fun SimilarMovies() {
+private fun SimilarMovies(modifier: Modifier = Modifier) {
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = AppTheme.dimension.small)
-            .horizontalSpacing(),
+        modifier = modifier.fillMaxWidth(),
         shape = AppTheme.shapes.roundedCornersExtraLarge,
         colors = CardDefaults.cardColors(containerColor = AppTheme.colors.card)
     ) {
@@ -439,11 +455,69 @@ private fun SimilarMovies() {
     }
 }
 
+/*
+* ****************************************
+* Previews
+* ****************************************
+* */
+
 @Preview
 @Composable
 private fun MovieDetailsScreenPrev() {
     MovieDetailsScreenContent(
-        movie = null,
+        movie = Movie(
+            id = 1,
+            title = "Zootopia",
+            description = "Description of Zootopia",
+            year = 2004,
+            genre = listOf("Family", "Comedy", "Mystery"),
+            duration = "1h 47min",
+            imdbRating = 2.3,
+            poster = "",
+            trailer = listOf(
+                com.ymistudios.disneyhotstar.data.pojo.movie.Trailer(
+                    id = 1,
+                    trailerUrl = "",
+                    durationMinutes = 2069
+                )
+            ),
+            parentalRating = "PG"
+        ),
         onClose = {}
     )
+}
+
+@Preview
+@Composable
+private fun MovieHeaderPrev() {
+    MovieHeader(poster = "", onClose = {})
+}
+
+@Preview
+@Composable
+private fun MovieBasicInfoPrev() {
+    MovieBasicInfo(year = 2024, duration = "1h 47min", parentalRating = "PG")
+}
+
+@Preview
+@Composable
+private fun MovieNameAndDescriptionPrev() {
+    MovieNameAndDescription(
+        name = "Zootopia",
+        imdbRating = 2.3,
+        description = "Description of Zootopia",
+        genre = listOf("Family", "Comedy", "Mystery")
+    )
+}
+
+@Preview
+@Composable
+private fun TrailerListPrev() {
+    TrailerList()
+}
+
+@Preview
+@Composable
+private fun SimilarMoviesPrev() {
+    SimilarMovies()
 }
