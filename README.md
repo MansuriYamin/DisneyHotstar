@@ -1,4 +1,4 @@
-# Disney+ Hotstar Replica
+# Disney+ Hotstar
 
 This project is a work-in-progress replica of the Disney+ Hotstar app, focusing on displaying
 movies. The UI design is heavily inspired
@@ -28,6 +28,16 @@ is built using Jetpack Compose, the modern UI toolkit for building native Androi
 - On the movie details screen, you can see additional information such as genre, trailers, and
   ratings.
 - Enjoy a sneak peek of what's to come as we continue development!
+
+## Features and Technologies Used
+
+- **[Jetpack Compose](https://developer.android.com/develop/ui/compose):** Modern UI toolkit for building native Android interfaces.
+- **[Type-safe Navigation](https://medium.com/androiddevelopers/navigation-compose-meet-type-safety-e081fb3cf2f8):** Ensures compile-time safety for navigation between screens.
+- **[Uni-directional Data Flow with UIState](https://developer.android.com/topic/architecture/ui-layer):** Used Uni-directional data flow pattern with UIState for managing and updating UI state in a predictable manner.
+- **[Hilt](https://developer.android.com/training/dependency-injection/hilt-android):** Dependency injection library for Android that reduces the boilerplate code for managing dependencies.
+- **[Shared Element Transition](https://developer.android.com/develop/ui/compose/animation/shared-elements):** Smooth transitions between screens, enhancing user experience.
+- **[Predictive Back Gesture](https://developer.android.com/guide/navigation/custom-back/predictive-back-gesture):** Improved back navigation experience.
+- **[Coil](https://coil-kt.github.io/coil/):** Image loading library for Android backed by Kotlin Coroutines.
 
 ## Contributions
 

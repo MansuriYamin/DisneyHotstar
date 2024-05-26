@@ -96,7 +96,7 @@ dependencies {
     ksp("io.github.raamcosta.compose-destinations:ksp:1.9.55")*/
 
     // Compose Navigation
-    implementation("androidx.navigation:navigation-compose:2.8.0-alpha08")
+    implementation("androidx.navigation:navigation-compose:2.8.0-beta01")
 
     // Serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
