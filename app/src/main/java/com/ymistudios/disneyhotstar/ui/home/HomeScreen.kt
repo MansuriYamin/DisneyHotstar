@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -89,7 +90,8 @@ private fun HomeScreenContent(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(AppTheme.colors.background),
+            .background(AppTheme.colors.background)
+            .testTag("movieLazyColumn"),
         verticalArrangement = Arrangement.spacedBy(10.dp),
         contentPadding = PaddingValues(vertical = AppTheme.dimension.verticalSpacing)
     ) {
@@ -122,6 +124,7 @@ private fun MovieList(
     outerIndex: Int
 ) {
     LazyRow(
+        modifier = Modifier.testTag("movieLazyRow"),
         horizontalArrangement = Arrangement.spacedBy(AppTheme.dimension.default),
         contentPadding = PaddingValues(
             horizontal = AppTheme.dimension.horizontalSpacing

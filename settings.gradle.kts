@@ -14,3 +14,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "DisneyHotstar"
 include(":app")
+include(":baselineprofile")

@@ -11,7 +11,20 @@ object MovieDatabase {
         Header(header = "Continue Watching", type = Header.Type.CONTINUE_WATCHING),
         Header(header = "Trending", type = Header.Type.TRENDING),
         Header(header = "Latest Releases", type = Header.Type.LATEST_RELEASES),
-        Header(header = "Popular", type = Header.Type.POPULAR)
+        Header(header = "Popular", type = Header.Type.POPULAR),
+        Header(header = "For Kids", type = Header.Type.FOR_KIDS),
+        Header(header = "For Others", type = Header.Type.FOR_KIDS),
+        Header(header = "For Teens", type = Header.Type.FOR_KIDS),
+        Header(header = "For Olds", type = Header.Type.FOR_KIDS),
+        Header(header = "For Youngs", type = Header.Type.FOR_KIDS),
+        Header(header = "For Heroes", type = Header.Type.FOR_KIDS),
+        Header(header = "For Womens", type = Header.Type.FOR_KIDS),
+        Header(header = "Happy", type = Header.Type.FOR_KIDS),
+        Header(header = "Sad", type = Header.Type.FOR_KIDS),
+        Header(header = "Cool", type = Header.Type.FOR_KIDS),
+        Header(header = "NotCool", type = Header.Type.FOR_KIDS),
+        Header(header = "YoBro", type = Header.Type.FOR_KIDS),
+        Header(header = "Wassup", type = Header.Type.FOR_KIDS),
     )
 
     val movieList = listOf(

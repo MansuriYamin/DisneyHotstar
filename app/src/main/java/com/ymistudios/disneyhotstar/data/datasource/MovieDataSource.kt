@@ -13,18 +13,20 @@ import javax.inject.Singleton
 class MovieDataSource @Inject constructor() : MovieRepository {
 
     override fun getMovies(): List<MovieWithHeader> {
-        return MovieDatabase.headers.map { header ->
-            MovieWithHeader(
-                header = header,
-                moviePosterList = when (header.type) {
-                    Header.Type.FOR_YOU -> getRandomMovies()
-                    Header.Type.CONTINUE_WATCHING -> getContinueWatchingMovies()
-                    Header.Type.POPULAR -> getPopularMovies()
-                    Header.Type.FOR_KIDS -> getRandomMovies()
-                    Header.Type.TRENDING -> getTrendingMovies()
-                    Header.Type.LATEST_RELEASES -> getLatestMovies()
-                }
-            )
+        return (0..99).flatMap {
+            MovieDatabase.headers.map { header ->
+                MovieWithHeader(
+                    header = header,
+                    moviePosterList = when (header.type) {
+                        Header.Type.FOR_YOU -> getRandomMovies()
+                        Header.Type.CONTINUE_WATCHING -> getContinueWatchingMovies()
+                        Header.Type.POPULAR -> getPopularMovies()
+                        Header.Type.FOR_KIDS -> getRandomMovies()
+                        Header.Type.TRENDING -> getTrendingMovies()
+                        Header.Type.LATEST_RELEASES -> getLatestMovies()
+                    }
+                )
+            }
         }
     }
 

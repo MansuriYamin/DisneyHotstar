@@ -8,6 +8,7 @@ plugins {
     id("kotlin-kapt")
     id("kotlin-parcelize")
     kotlin("plugin.serialization") version "1.9.23"
+    id("androidx.baselineprofile")
 }
 
 kotlin {
@@ -106,6 +107,8 @@ dependencies {
 
     // Hilt
     implementation("com.google.dagger:hilt-android:2.49")
+    implementation("androidx.profileinstaller:profileinstaller:1.3.1")
+    "baselineProfile"(project(":baselineprofile"))
     kapt("com.google.dagger:hilt-compiler:2.49")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
