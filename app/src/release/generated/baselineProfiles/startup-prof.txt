@@ -7350,7 +7350,6 @@ HSPLandroidx/compose/ui/layout/LookaheadLayoutCoordinates;->getCoordinator()Land
 HSPLandroidx/compose/ui/layout/LookaheadLayoutCoordinates;->getSize-YbymL2g()J
 HSPLandroidx/compose/ui/layout/LookaheadLayoutCoordinates;->localPositionOf-R5De75A(Landroidx/compose/ui/layout/LayoutCoordinates;J)J
 HSPLandroidx/compose/ui/layout/LookaheadLayoutCoordinates;->localPositionOf-S_NoaFU(Landroidx/compose/ui/layout/LayoutCoordinates;JZ)J
-Landroidx/compose/ui/layout/LookaheadLayoutCoordinatesKt;
 Landroidx/compose/ui/layout/LookaheadScope;
 Landroidx/compose/ui/layout/LookaheadScopeImpl;
 HSPLandroidx/compose/ui/layout/LookaheadScopeImpl;-><clinit>()V
@@ -12758,7 +12757,6 @@ PLandroidx/profileinstaller/ProfileVerifier$Api33Impl;->getPackageInfo(Landroid/
 PLandroidx/profileinstaller/ProfileVerifier$Cache;-><init>(IIJJ)V
 PLandroidx/profileinstaller/ProfileVerifier$Cache;->equals(Ljava/lang/Object;)Z
 PLandroidx/profileinstaller/ProfileVerifier$Cache;->readFromFile(Ljava/io/File;)Landroidx/profileinstaller/ProfileVerifier$Cache;
-PLandroidx/profileinstaller/ProfileVerifier$Cache;->writeOnFile(Ljava/io/File;)V
 PLandroidx/profileinstaller/ProfileVerifier$CompilationStatus;-><init>(IZZ)V
 Landroidx/savedstate/R$id;
 Landroidx/savedstate/Recreator;
@@ -13146,7 +13144,6 @@ HSPLcoil/decode/DecodeUtils;-><clinit>()V
 HSPLcoil/decode/DecodeUtils;-><init>()V
 HSPLcoil/decode/DecodeUtils;->calculateInSampleSize(IIIILcoil/size/Scale;)I
 HSPLcoil/decode/DecodeUtils;->computeSizeMultiplier(DDDDLcoil/size/Scale;)D
-HSPLcoil/decode/DecodeUtils;->computeSizeMultiplier(IIIILcoil/size/Scale;)D
 Lcoil/decode/DecodeUtils$WhenMappings;
 HSPLcoil/decode/DecodeUtils$WhenMappings;-><clinit>()V
 Lcoil/decode/Decoder;
@@ -13419,12 +13416,7 @@ Lcoil/memory/MemoryCacheService;
 HSPLcoil/memory/MemoryCacheService;-><clinit>()V
 HSPLcoil/memory/MemoryCacheService;-><init>(Lcoil/ImageLoader;Lcoil/request/RequestService;Lcoil/util/Logger;)V
 HSPLcoil/memory/MemoryCacheService;->getCacheValue(Lcoil/request/ImageRequest;Lcoil/memory/MemoryCache$Key;Lcoil/size/Size;Lcoil/size/Scale;)Lcoil/memory/MemoryCache$Value;
-HSPLcoil/memory/MemoryCacheService;->getDiskCacheKey(Lcoil/memory/MemoryCache$Value;)Ljava/lang/String;
-HSPLcoil/memory/MemoryCacheService;->isCacheValueValid$coil_base_release(Lcoil/request/ImageRequest;Lcoil/memory/MemoryCache$Key;Lcoil/memory/MemoryCache$Value;Lcoil/size/Size;Lcoil/size/Scale;)Z
-HSPLcoil/memory/MemoryCacheService;->isSampled(Lcoil/memory/MemoryCache$Value;)Z
-HSPLcoil/memory/MemoryCacheService;->isSizeValid(Lcoil/request/ImageRequest;Lcoil/memory/MemoryCache$Key;Lcoil/memory/MemoryCache$Value;Lcoil/size/Size;Lcoil/size/Scale;)Z
 HSPLcoil/memory/MemoryCacheService;->newCacheKey(Lcoil/request/ImageRequest;Ljava/lang/Object;Lcoil/request/Options;Lcoil/EventListener;)Lcoil/memory/MemoryCache$Key;
-HSPLcoil/memory/MemoryCacheService;->newResult(Lcoil/intercept/Interceptor$Chain;Lcoil/request/ImageRequest;Lcoil/memory/MemoryCache$Key;Lcoil/memory/MemoryCache$Value;)Lcoil/request/SuccessResult;
 HSPLcoil/memory/MemoryCacheService;->setCacheValue(Lcoil/memory/MemoryCache$Key;Lcoil/request/ImageRequest;Lcoil/intercept/EngineInterceptor$ExecuteResult;)Z
 Lcoil/memory/MemoryCacheService$Companion;
 HSPLcoil/memory/MemoryCacheService$Companion;-><init>()V
@@ -13719,7 +13711,6 @@ HSPLcoil/transition/Transition$Factory$Companion;-><init>()V
 Lcoil/transition/TransitionTarget;
 Lcoil/util/-Bitmaps;
 HSPLcoil/util/-Bitmaps;->getAllocationByteCountCompat(Landroid/graphics/Bitmap;)I
-HSPLcoil/util/-Bitmaps;->getSafeConfig(Landroid/graphics/Bitmap;)Landroid/graphics/Bitmap$Config;
 HSPLcoil/util/-Bitmaps;->isHardware(Landroid/graphics/Bitmap$Config;)Z
 Lcoil/util/-Calls;
 Lcoil/util/-Collections;
@@ -14810,8 +14801,6 @@ HSPLkotlin/collections/EmptyMap;-><clinit>()V
 HSPLkotlin/collections/EmptyMap;-><init>()V
 HSPLkotlin/collections/EmptyMap;->entrySet()Ljava/util/Set;
 HSPLkotlin/collections/EmptyMap;->equals(Ljava/lang/Object;)Z
-HSPLkotlin/collections/EmptyMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
-HSPLkotlin/collections/EmptyMap;->get(Ljava/lang/Object;)Ljava/lang/Void;
 HSPLkotlin/collections/EmptyMap;->getEntries()Ljava/util/Set;
 HSPLkotlin/collections/EmptyMap;->getKeys()Ljava/util/Set;
 HSPLkotlin/collections/EmptyMap;->getSize()I

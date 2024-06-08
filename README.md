@@ -38,6 +38,9 @@ is built using Jetpack Compose, the modern UI toolkit for building native Androi
 - **[Shared Element Transition](https://developer.android.com/develop/ui/compose/animation/shared-elements):** Smooth transitions between screens, enhancing user experience.
 - **[Predictive Back Gesture](https://developer.android.com/guide/navigation/custom-back/predictive-back-gesture):** Improved back navigation experience.
 - **[Coil](https://coil-kt.github.io/coil/):** Image loading library for Android backed by Kotlin Coroutines.
+- **[Custom Design System](https://developer.android.com/develop/ui/compose/designsystems/custom):** Developed a custom design system to maintain consistency and efficiency in UI development.
+- **[Benchmarking](https://developer.android.com/topic/performance/benchmarking/benchmarking-overview):** Conducted performance benchmarks to evaluate app performance.
+- **[Baseline Profile](https://developer.android.com/topic/performance/baselineprofiles/overview):** Established baseline profiles to monitor and optimize app resource usage.
 
 ## Contributions
 
@@ -53,5 +56,4 @@ Contributions are welcome! If you'd like to contribute to this project, please f
 
 - Thanks to Disney for the inspiration from their Hotstar app.
 - Special thanks to the Jetpack Compose team for creating such a powerful UI toolkit.
-- UI design heavily inspired
-  by [Disney But Better](https://www.behance.net/gallery/141700011/Disney-But-Better) on Behance.
+- UI design heavily inspired by [Disney But Better](https://www.behance.net/gallery/141700011/Disney-But-Better) on Behance.

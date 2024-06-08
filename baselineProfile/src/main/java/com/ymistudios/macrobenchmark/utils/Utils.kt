@@ -1,4 +1,4 @@
-package com.ymistudios.utils
+package com.ymistudios.macrobenchmark.utils
 
 import androidx.test.platform.app.InstrumentationRegistry
 
