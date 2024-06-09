@@ -9,12 +9,12 @@ data class Movie(
     val duration: String,
     val imdbRating: Double,
     val poster: String,
-    val trailer: List<Trailer>,
+    val trailers: List<Trailer>,
     val parentalRating: String
 )
 
 data class Trailer(
     val id: Int,
-    val trailerUrl: String,
-    val durationMinutes: Int
+    val thumbnail: String,
+    val duration: String
 )

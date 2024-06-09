@@ -7,9 +7,9 @@ data class Header(
     enum class Type {
         FOR_YOU,
         CONTINUE_WATCHING,
-        POPULAR,
-        FOR_KIDS,
         TRENDING,
-        LATEST_RELEASES
+        LATEST_RELEASES,
+        POPULAR,
+        FOR_KIDS
     }
 }

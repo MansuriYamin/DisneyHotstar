@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
@@ -44,6 +45,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.ymistudios.disneyhotstar.R
 import com.ymistudios.disneyhotstar.data.pojo.movie.Movie
+import com.ymistudios.disneyhotstar.data.pojo.movie.MoviePoster
+import com.ymistudios.disneyhotstar.data.pojo.movie.Trailer
 import com.ymistudios.disneyhotstar.di.module.injectNavigator
 import com.ymistudios.disneyhotstar.domain.navigator.Navigator
 import com.ymistudios.disneyhotstar.ui.components.Icon
@@ -75,6 +78,7 @@ fun MovieDetailsScreen(
     with(sharedTransitionScope) {
         MovieDetailsScreenContent(
             movie = uiState.movie,
+            similarMovies = uiState.similarMovies,
             sharedElement = {
                 sharedElement(
                     state = sharedTransitionScope.rememberSharedContentState(key = movieDetails.sharedElementKey),
@@ -89,6 +93,7 @@ fun MovieDetailsScreen(
 @Composable
 private fun MovieDetailsScreenContent(
     movie: Movie?,
+    similarMovies: List<MoviePoster>,
     sharedElement: @Composable Modifier.() -> Modifier = { Modifier },
     onClose: () -> Unit
 ) {
@@ -121,13 +126,15 @@ private fun MovieDetailsScreenContent(
                     name = movie.title,
                     imdbRating = movie.imdbRating,
                     description = movie.description,
-                    genre = movie.genre
+                    genre = movie.genre,
+                    trailers = movie.trailers
                 )
 
                 SimilarMovies(
                     modifier = Modifier
                         .padding(top = AppTheme.dimension.small)
-                        .horizontalSpacing()
+                        .horizontalSpacing(),
+                    similarMovies = similarMovies
                 )
             }
         }
@@ -284,7 +291,8 @@ private fun MovieNameAndDescription(
     name: String,
     imdbRating: Double,
     description: String,
-    genre: List<String>
+    genre: List<String>,
+    trailers: List<Trailer>
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
@@ -351,20 +359,25 @@ private fun MovieNameAndDescription(
                 color = White.copy(alpha = 0.4f)
             )
 
-            TrailerList(modifier = Modifier.padding(top = AppTheme.dimension.large))
+            TrailerList(
+                modifier = Modifier
+                    .padding(top = AppTheme.dimension.large)
+                    .align(Alignment.Start),
+                trailers = trailers
+            )
         }
     }
 }
 
 @Composable
-private fun Trailer() {
+private fun Trailer(trailer: Trailer) {
     Box {
         AsyncImage(
             modifier = Modifier
                 .width(AppTheme.dimension.trailerWidth)
                 .aspectRatio(16 / 9f)
                 .clip(AppTheme.shapes.roundedCorners),
-            model = "https://i.pinimg.com/236x/aa/39/57/aa39574b40081259b8b674dcc78c86d3.jpg",
+            model = trailer.thumbnail,
             contentScale = ContentScale.Crop,
             contentDescription = ""
         )
@@ -396,27 +409,31 @@ private fun Trailer() {
                     .background(White.copy(alpha = 0.6f))
             )
 
-            Text("2:05", style = AppTheme.typography.subTitle, color = White.copy(alpha = 0.6f))
+            Text(
+                trailer.duration,
+                style = AppTheme.typography.subTitle,
+                color = White.copy(alpha = 0.6f)
+            )
         }
     }
 }
 
 @Composable
-private fun TrailerList(modifier: Modifier = Modifier) {
+private fun TrailerList(modifier: Modifier = Modifier, trailers: List<Trailer>) {
     LazyRow(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(AppTheme.dimension.medium),
         contentPadding = PaddingValues(horizontal = AppTheme.dimension.medium)
     ) {
-        items(5) {
-            Trailer()
+        items(trailers) { trailer ->
+            Trailer(trailer = trailer)
         }
     }
 }
 
 @Composable
 @OptIn(ExperimentalLayoutApi::class)
-private fun SimilarMovies(modifier: Modifier = Modifier) {
+private fun SimilarMovies(modifier: Modifier = Modifier, similarMovies: List<MoviePoster>) {
     Card(
         modifier = modifier.fillMaxWidth(),
         shape = AppTheme.shapes.roundedCornersExtraLarge,
@@ -443,11 +460,9 @@ private fun SimilarMovies(modifier: Modifier = Modifier) {
                 horizontalArrangement = Arrangement.spacedBy(AppTheme.dimension.default),
                 verticalArrangement = Arrangement.spacedBy(AppTheme.dimension.default)
             ) {
-                (0..11).map {
+                similarMovies.map { moviePoster ->
                     MoviePoster(
-                        moviePoster = com.ymistudios.disneyhotstar.data.pojo.movie.MoviePoster(
-                            poster = "https://i.pinimg.com/236x/bf/0f/53/bf0f539e1d82d62725911e2b75056f46.jpg"
-                        ),
+                        moviePoster = moviePoster,
                         width = itemSize,
                         onClick = {}
                     )
@@ -476,15 +491,16 @@ private fun MovieDetailsScreenPrev() {
             duration = "1h 47min",
             imdbRating = 2.3,
             poster = "",
-            trailer = listOf(
-                com.ymistudios.disneyhotstar.data.pojo.movie.Trailer(
+            trailers = listOf(
+                Trailer(
                     id = 1,
-                    trailerUrl = "",
-                    durationMinutes = 2069
+                    thumbnail = "",
+                    duration = "1min 35sec"
                 )
             ),
             parentalRating = "PG"
         ),
+        similarMovies = emptyList(),
         onClose = {}
     )
 }
@@ -508,18 +524,19 @@ private fun MovieNameAndDescriptionPrev() {
         name = "Zootopia",
         imdbRating = 2.3,
         description = "Description of Zootopia",
-        genre = listOf("Family", "Comedy", "Mystery")
+        genre = listOf("Family", "Comedy", "Mystery"),
+        trailers = emptyList()
     )
 }
 
 @Preview
 @Composable
 private fun TrailerListPrev() {
-    TrailerList()
+    TrailerList(trailers = emptyList())
 }
 
 @Preview
 @Composable
 private fun SimilarMoviesPrev() {
-    SimilarMovies()
+    SimilarMovies(similarMovies = emptyList())
 }
