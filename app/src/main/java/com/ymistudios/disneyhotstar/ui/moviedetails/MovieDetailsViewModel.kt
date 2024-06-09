@@ -16,20 +16,22 @@ class MovieDetailsViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(MovieDetailsUiState())
     val uiState = _uiState.asStateFlow()
 
+    private var isDataLoaded: Boolean = false
+
     fun onEvent(event: MovieDetailsEvent) {
         when (event) {
             is MovieDetailsEvent.GetMovieDetails -> getMovieDetails(event.id)
-            MovieDetailsEvent.GetSimilarMovies -> {
-
-            }
         }
     }
 
     private fun getMovieDetails(id: Int) {
-        _uiState.update {
-            it.copy(movie = movieRepository.getMovieDetails(id))
+        if (!isDataLoaded) {
+            _uiState.update {
+                it.copy(movie = movieRepository.getMovieDetails(id))
+            }
+            getSimilarMovies(id)
+            isDataLoaded = true
         }
-        getSimilarMovies(id)
     }
 
     private fun getSimilarMovies(id: Int) {

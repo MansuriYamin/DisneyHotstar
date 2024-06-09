@@ -8,10 +8,10 @@ is built using Jetpack Compose, the modern UI toolkit for building native Androi
 ## Screenshots
 
 <p>
-<img src="previews/Home_1.png" width="270" alt="Home"/>
-<img src="previews/Home_2.png" width="270" alt="Home"/>
-<img src="previews/Details_1.png" width="270" alt="Details"/>
-<img src="previews/Details_2.png" width="270" alt="Details"/>
+<img src="preview/Home_1.png" width="270" alt="Home"/>
+<img src="preview/Home_2.png" width="270" alt="Home"/>
+<img src="preview/Details_1.png" width="270" alt="Details"/>
+<img src="preview/Details_2.png" width="270" alt="Details"/>
 </p>
 
 ## Installation

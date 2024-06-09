@@ -67,12 +67,12 @@ fun HomeScreen(
                     animatedVisibilityScope = animatedContentScope
                 )
             },
-            onMoviePosterClick = { it, key ->
+            onMoviePosterClick = { moviePoster, sharedElementKey ->
                 navigator.navigate(
                     DashboardDestinations.MovieDetails(
-                        image = it.poster,
-                        id = it.id,
-                        sharedElementKey = key
+                        image = moviePoster.poster,
+                        id = moviePoster.id,
+                        sharedElementKey = sharedElementKey
                     )
                 )
             }
@@ -84,7 +84,7 @@ fun HomeScreen(
 @Composable
 private fun HomeScreenContent(
     movieList: List<MovieWithHeader>,
-    sharedElement: @Composable Modifier.(String) -> Modifier = { Modifier },
+    sharedElement: @Composable Modifier.(sharedElementKey: String) -> Modifier = { Modifier },
     onMoviePosterClick: (moviePoster: MoviePoster, sharedElementKey: String) -> Unit
 ) {
     LazyColumn(
@@ -119,7 +119,7 @@ private fun HomeScreenContent(
 @Composable
 private fun MovieList(
     moviePosterList: List<MoviePoster>,
-    sharedElement: @Composable (Modifier.(String) -> Modifier) = { Modifier },
+    sharedElement: @Composable (Modifier.(sharedElementKey: String) -> Modifier) = { Modifier },
     onMoviePosterClick: (moviePoster: MoviePoster, sharedElementKey: String) -> Unit,
     outerIndex: Int
 ) {
@@ -131,12 +131,14 @@ private fun MovieList(
         )
     ) {
         itemsIndexed(
-            moviePosterList,
-            key = { index, _ -> "$outerIndex$index" }) { index, moviePoster ->
+            items = moviePosterList,
+            key = { innerIndex, _ -> "$outerIndex$innerIndex" }
+        ) { innerIndex, moviePoster ->
+            val sharedElementKey = "image-$outerIndex$innerIndex"
             MoviePoster(
+                modifier = Modifier.sharedElement(sharedElementKey),
                 moviePoster = moviePoster,
-                modifier = Modifier.sharedElement("image-$outerIndex$index"),
-                onClick = { onMoviePosterClick(moviePoster, "image-$outerIndex$index") }
+                onClick = { onMoviePosterClick(moviePoster, sharedElementKey) }
             )
         }
     }

@@ -69,7 +69,7 @@ fun MovieDetailsScreen(
     sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope
 ) {
-    LaunchedEffect(key1 = Unit) {
+    LaunchedEffect(Unit) {
         movieDetailsViewModel.onEvent(MovieDetailsEvent.GetMovieDetails(movieDetails.id))
     }
 
@@ -79,10 +79,25 @@ fun MovieDetailsScreen(
         MovieDetailsScreenContent(
             movie = uiState.movie,
             similarMovies = uiState.similarMovies,
-            sharedElement = {
+            detailsSharedElement = {
                 sharedElement(
                     state = sharedTransitionScope.rememberSharedContentState(key = movieDetails.sharedElementKey),
                     animatedVisibilityScope = animatedContentScope
+                )
+            },
+            similarMovieSharedElement = { sharedElementKey ->
+                sharedElement(
+                    state = sharedTransitionScope.rememberSharedContentState(key = sharedElementKey),
+                    animatedVisibilityScope = animatedContentScope
+                )
+            },
+            onMoviePosterClick = { moviePoster, sharedElementKey ->
+                navigator.navigate(
+                    DashboardDestinations.MovieDetails(
+                        id = moviePoster.id,
+                        image = moviePoster.poster,
+                        sharedElementKey = sharedElementKey
+                    )
                 )
             },
             onClose = { navigator.navigateBack() }
@@ -94,7 +109,9 @@ fun MovieDetailsScreen(
 private fun MovieDetailsScreenContent(
     movie: Movie?,
     similarMovies: List<MoviePoster>,
-    sharedElement: @Composable Modifier.() -> Modifier = { Modifier },
+    detailsSharedElement: @Composable Modifier.() -> Modifier = { Modifier },
+    similarMovieSharedElement: @Composable Modifier.(sharedElementKey: String) -> Modifier = { Modifier },
+    onMoviePosterClick: (moviePoster: MoviePoster, sharedElementKey: String) -> Unit,
     onClose: () -> Unit
 ) {
     movie?.let {
@@ -108,7 +125,7 @@ private fun MovieDetailsScreenContent(
             item {
                 MovieHeader(
                     poster = movie.poster,
-                    sharedElement = sharedElement,
+                    detailsSharedElement = detailsSharedElement,
                     onClose = onClose
                 )
 
@@ -134,7 +151,10 @@ private fun MovieDetailsScreenContent(
                     modifier = Modifier
                         .padding(top = AppTheme.dimension.small)
                         .horizontalSpacing(),
-                    similarMovies = similarMovies
+                    movieId = movie.id,
+                    similarMovies = similarMovies,
+                    similarMovieSharedElement = similarMovieSharedElement,
+                    onMoviePosterClick = onMoviePosterClick
                 )
             }
         }
@@ -144,13 +164,13 @@ private fun MovieDetailsScreenContent(
 @Composable
 private fun MovieHeader(
     poster: String,
-    sharedElement: @Composable Modifier.() -> Modifier = { Modifier },
+    detailsSharedElement: @Composable Modifier.() -> Modifier = { Modifier },
     onClose: () -> Unit
 ) {
     Box {
         AsyncImage(
             modifier = Modifier
-                .sharedElement()
+                .detailsSharedElement()
                 .fillMaxWidth()
                 .aspectRatio(2 / 3f)
                 .clip(AppTheme.shapes.bottomRoundedCorners),
@@ -433,7 +453,13 @@ private fun TrailerList(modifier: Modifier = Modifier, trailers: List<Trailer>) 
 
 @Composable
 @OptIn(ExperimentalLayoutApi::class)
-private fun SimilarMovies(modifier: Modifier = Modifier, similarMovies: List<MoviePoster>) {
+private fun SimilarMovies(
+    modifier: Modifier = Modifier,
+    movieId: Int,
+    similarMovies: List<MoviePoster>,
+    similarMovieSharedElement: @Composable Modifier.(sharedElementKey: String) -> Modifier = { Modifier },
+    onMoviePosterClick: (moviePoster: MoviePoster, sharedElementKey: String) -> Unit
+) {
     Card(
         modifier = modifier.fillMaxWidth(),
         shape = AppTheme.shapes.roundedCornersExtraLarge,
@@ -453,18 +479,22 @@ private fun SimilarMovies(modifier: Modifier = Modifier, similarMovies: List<Mov
                 style = AppTheme.typography.title
             )
 
-            val itemSize =
+            val itemWidth =
                 ((LocalConfiguration.current.screenWidthDp.dp - (AppTheme.dimension.default * 2) - (AppTheme.dimension.medium * 2) - (AppTheme.dimension.horizontalSpacing * 2) - AppTheme.dimension.extraSmall) / 3)
             FlowRow(
                 modifier = Modifier.padding(top = AppTheme.dimension.large),
                 horizontalArrangement = Arrangement.spacedBy(AppTheme.dimension.default),
                 verticalArrangement = Arrangement.spacedBy(AppTheme.dimension.default)
             ) {
-                similarMovies.map { moviePoster ->
+                similarMovies.mapIndexed { index, moviePoster ->
+                    val sharedElementKey = "similarMovie-$index-${moviePoster.id}-$movieId"
                     MoviePoster(
+                        modifier = Modifier.similarMovieSharedElement(sharedElementKey),
                         moviePoster = moviePoster,
-                        width = itemSize,
-                        onClick = {}
+                        width = itemWidth,
+                        onClick = { clickedMoviePoster ->
+                            onMoviePosterClick(clickedMoviePoster, sharedElementKey)
+                        }
                     )
                 }
             }
@@ -501,6 +531,7 @@ private fun MovieDetailsScreenPrev() {
             parentalRating = "PG"
         ),
         similarMovies = emptyList(),
+        onMoviePosterClick = { _, _ -> },
         onClose = {}
     )
 }
@@ -538,5 +569,5 @@ private fun TrailerListPrev() {
 @Preview
 @Composable
 private fun SimilarMoviesPrev() {
-    SimilarMovies(similarMovies = emptyList())
+    SimilarMovies(similarMovies = emptyList(), movieId = 1,onMoviePosterClick = { _, _ -> })
 }

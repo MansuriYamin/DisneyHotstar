@@ -61,7 +61,7 @@ object MovieDatabase {
                 ),
                 Trailer(
                     id = 5,
-                    thumbnail = "https://i.pinimg.com/736x/06/0f/f0/060ff06fc443fb2d00acac84579ab581.jpg",
+                    thumbnail = "https://i.pinimg.com/736x/45/c1/a6/45c1a6b277d3851ca756b86cc74c700c.jpg",
                     duration = "2:05"
                 ),
                 Trailer(
